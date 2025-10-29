@@ -15,6 +15,7 @@ PROFESORES = {
         "nombre": "Profesor Ferrarre",
         "emoji": "📊",
         "estilo": "Práctico y numérico",
+        "personalidad": "Eres directo, técnico y motivador. Enfócate en ejercicios prácticos y procesos paso a paso.",
         "consejos": [
             "Practica TODOS los ejercicios de las guías",
             "Enfócate en entender el proceso, no solo el resultado",
@@ -27,6 +28,7 @@ PROFESORES = {
         "nombre": "Especialista IA", 
         "emoji": "🤖",
         "estilo": "Técnico y práctico",
+        "personalidad": "Eres preciso, moderno y práctico. Explica conceptos técnicos de manera clara.",
         "consejos": [
             "Empieza con los fundamentos antes de frameworks",
             "Practica con proyectos pequeños primero",
@@ -39,6 +41,7 @@ PROFESORES = {
         "nombre": "Profesora Acri",
         "emoji": "💼", 
         "estilo": "Exigente y profesional",
+        "personalidad": "Eres profesional, directa y orientada a resultados. Sé exigente pero constructiva.",
         "consejos": [
             "Sé impecable en presentaciones y entregas",
             "Investiga la empresa antes de entrevistas",
@@ -51,6 +54,7 @@ PROFESORES = {
         "nombre": "Especialista Comunicación",
         "emoji": "🎯",
         "estilo": "Claro y estructurado", 
+        "personalidad": "Eres amable, organizado y ejemplificador. Enseña con ejemplos concretos.",
         "consejos": [
             "Estructura tu mensaje antes de hablar",
             "Practica la escucha activa",
@@ -65,13 +69,60 @@ PROFESORES = {
 # CONFIGURACIÓN STREAMLIT
 # =========================================
 st.set_page_config(
-    page_title="Asistente 4 Materias + Búsqueda Semántica",
+    page_title="Asistente 4 Materias + IA Avanzada",
     page_icon="🎓",
     layout="wide"
 )
 
 # =========================================
-# SISTEMA DE BÚSQUEDA SEMÁNTICA
+# SISTEMA DE IA CON MODELOS LIGEROS
+# =========================================
+class SistemaIA:
+    def __init__(self):
+        self.modelo_ia = None
+        self.tokenizer = None
+    
+    def cargar_modelo_ligero(self):
+        """Cargar modelo de IA ligero y compatible"""
+        try:
+            from transformers import pipeline
+            
+            # Usar un modelo más ligero y rápido
+            self.modelo_ia = pipeline(
+                "text-generation",
+                model="microsoft/DialoGPT-small",  # Modelo pequeño y rápido
+                max_length=400,
+                temperature=0.7,
+                do_sample=True
+            )
+            return True
+        except Exception as e:
+            st.warning(f"⚠️ Modelo IA no disponible: {str(e)}")
+            return False
+    
+    def generar_respuesta_ia(self, prompt, max_longitud=350):
+        """Generar respuesta usando IA"""
+        try:
+            if not self.modelo_ia:
+                return None
+                
+            respuesta = self.modelo_ia(
+                prompt,
+                max_new_tokens=max_longitud,
+                pad_token_id=self.modelo_ia.tokenizer.eos_token_id
+            )
+            
+            texto_generado = respuesta[0]['generated_text']
+            # Limpiar y formatear la respuesta
+            texto_generado = texto_generado.replace(prompt, "").strip()
+            return texto_generado
+            
+        except Exception as e:
+            st.error(f"❌ Error generando respuesta IA: {str(e)}")
+            return None
+
+# =========================================
+# SISTEMA DE BÚSQUEDA SEMÁNTICA MEJORADO
 # =========================================
 class SistemaBusqueda:
     def __init__(self):
@@ -87,11 +138,9 @@ class SistemaBusqueda:
             if not os.path.exists(base_path):
                 return False
             
-            # Limpiar datos anteriores
             self.documentos = []
             self.nombres_docs = []
             
-            # Cargar todos los documentos
             for materia in os.listdir(base_path):
                 materia_path = os.path.join(base_path, materia)
                 if os.path.isdir(materia_path):
@@ -101,19 +150,17 @@ class SistemaBusqueda:
                             try:
                                 with open(archivo_path, 'r', encoding='utf-8') as f:
                                     contenido = f.read()
-                                    # Dividir en párrafos para búsqueda más precisa
                                     parrafos = self._dividir_en_parrafos(contenido)
                                     for i, parrafo in enumerate(parrafos):
-                                        if len(parrafo.strip()) > 50:  # Solo párrafos significativos
+                                        if len(parrafo.strip()) > 50:
                                             self.documentos.append(parrafo)
                                             self.nombres_docs.append(f"{materia}/{archivo} - Párrafo {i+1}")
-                            except Exception as e:
+                            except Exception:
                                 continue
             
             if not self.documentos:
                 return False
             
-            # Crear modelo TF-IDF
             self.vectorizer = TfidfVectorizer(
                 stop_words=['el', 'la', 'los', 'las', 'de', 'en', 'y', 'que', 'se', 'no'],
                 max_features=1000,
@@ -129,7 +176,6 @@ class SistemaBusqueda:
     
     def _dividir_en_parrafos(self, texto):
         """Dividir texto en párrafos significativos"""
-        # Dividir por saltos de línea dobles o puntos seguidos de mayúscula
         parrafos = re.split(r'\n\s*\n|\.\s+[A-Z]', texto)
         return [p.strip() for p in parrafos if p.strip()]
     
@@ -139,18 +185,13 @@ class SistemaBusqueda:
             return []
         
         try:
-            # Transformar la consulta
             consulta_tfidf = self.vectorizer.transform([consulta])
-            
-            # Calcular similitudes
             similitudes = cosine_similarity(consulta_tfidf, self.matriz_tfidf).flatten()
-            
-            # Obtener los índices de los más similares
             indices_similares = similitudes.argsort()[-top_n:][::-1]
             
             resultados = []
             for idx in indices_similares:
-                if similitudes[idx] > 0.1:  # Umbral mínimo de similitud
+                if similitudes[idx] > 0.1:
                     resultados.append({
                         'contenido': self.documentos[idx],
                         'fuente': self.nombres_docs[idx],
@@ -160,66 +201,121 @@ class SistemaBusqueda:
             return resultados
             
         except Exception as e:
-            st.error(f"❌ Error en búsqueda: {str(e)}")
             return []
 
 # =========================================
-# FUNCIÓN MEJORADA DE RESPUESTAS
+# GENERACIÓN DE RESPUESTAS HÍBRIDA (IA + BÚSQUEDA)
 # =========================================
-def generar_respuesta_inteligente(pregunta, materia, sistema_busqueda):
-    """Generar respuesta usando búsqueda semántica"""
+def generar_respuesta_avanzada(pregunta, materia, sistema_busqueda, sistema_ia):
+    """Generar respuesta combinando IA y búsqueda semántica"""
     profesor = PROFESORES[materia]
     
     # Buscar contenido relevante
     resultados = sistema_busqueda.buscar_similaridad(pregunta)
-    
-    # Filtrar resultados por materia si es posible
     resultados_materia = [r for r in resultados if materia in r['fuente']]
     if not resultados_materia:
-        resultados_materia = resultados  # Usar todos si no hay de la materia específica
+        resultados_materia = resultados
     
-    # Construir respuesta base
-    respuesta_base = f"""
-    {profesor['emoji']} **{profesor['nombre']} responde:**
+    # Construir contexto para IA
+    contexto_ia = ""
+    if resultados_materia:
+        contexto_ia = "\n".join([
+            f"Fuente: {r['fuente']}\nContenido: {r['contenido'][:300]}..."
+            for r in resultados_materia[:2]
+        ])
+    
+    # Crear prompt para IA
+    prompt_ia = f"""
+    Eres {profesor['nombre']}, un profesor especializado en {materia.replace('_', ' ')}.
+    {profesor['personalidad']}
+    
+    CONTEXTO DEL MATERIAL:
+    {contexto_ia}
+    
+    PREGUNTA DEL ESTUDIANTE:
+    {pregunta}
+    
+    Responde como lo haría este profesor, usando el contexto proporcionado y tu expertise.
+    Sé práctico, útil y mantén tu personalidad característica.
+    Responde en español.
+    
+    RESPUESTA:
+    """
+    
+    # Intentar generar con IA
+    respuesta_ia = None
+    if sistema_ia and sistema_ia.modelo_ia:
+        respuesta_ia = sistema_ia.generar_respuesta_ia(prompt_ia)
+    
+    # Construir respuesta final
+    if respuesta_ia:
+        respuesta_final = f"""
+        {profesor['emoji']} **{profesor['nombre']} responde:**
+        
+        {respuesta_ia}
+        """
+    else:
+        # Fallback a respuesta semántica mejorada
+        respuesta_final = generar_respuesta_semantica(pregunta, materia, resultados_materia, profesor)
+    
+    # Añadir referencias si hay resultados relevantes
+    if resultados_materia:
+        respuesta_final += f"\n\n**📚 Fuentes consultadas:**"
+        for i, resultado in enumerate(resultados_materia[:2], 1):
+            similitud_porcentaje = resultado['similitud'] * 100
+            respuesta_final += f"\n• **{resultado['fuente']}** (relevancia: {similitud_porcentaje:.1f}%)"
+    
+    return respuesta_final
 
+def generar_respuesta_semantica(pregunta, materia, resultados, profesor):
+    """Generar respuesta usando solo búsqueda semántica"""
+    respuesta = f"""
+    {profesor['emoji']} **{profesor['nombre']} responde:**
+    
     **Sobre tu pregunta:** "{pregunta}"
     """
     
-    # Añadir contenido relevante si se encontró
-    if resultados_materia:
-        respuesta_base += f"\n\n**📚 Encontré información relevante en el material:**\n\n"
-        
-        for i, resultado in enumerate(resultados_materia[:2], 1):  # Top 2 resultados
-            similitud_porcentaje = resultado['similitud'] * 100
-            respuesta_base += f"**{i}. De {resultado['fuente']}** (relevancia: {similitud_porcentaje:.1f}%):\n"
-            respuesta_base += f"*\"{resultado['contenido'][:250]}...\"*\n\n"
+    if resultados:
+        respuesta += f"\n\n**📚 Basándome en el material, te recomiendo:**\n\n"
+        for i, resultado in enumerate(resultados[:2], 1):
+            respuesta += f"**{i}. {resultado['contenido'][:200]}...**\n"
+            respuesta += f"   *Fuente: {resultado['fuente']}*\n\n"
     else:
-        # Fallback a consejos del profesor
-        respuesta_base += f"\n\n**💡 {random.choice(profesor['consejos'])}**"
-        respuesta_base += f"\n\n**🎯 Recuerda:** En {materia.replace('_', ' ')}, {profesor['estilo'].lower()}"
+        respuesta += f"\n\n**💡 {random.choice(profesor['consejos'])}**"
     
-    # Añadir estilo y consejo del profesor
-    respuesta_base += f"\n\n**🌟 Consejo de {profesor['nombre']}:** {random.choice(profesor['consejos'])}"
+    respuesta += f"\n\n**🎯 Recuerda mi estilo:** {profesor['estilo']}"
+    respuesta += f"\n\n**🌟 Consejo práctico:** {random.choice(profesor['consejos'])}"
     
-    return respuesta_base
+    return respuesta
 
 # =========================================
 # INTERFAZ PRINCIPAL MEJORADA
 # =========================================
 def main():
-    st.title("🎓 Asistente 4 Materias + Búsqueda Semántica")
-    st.markdown("### Ahora con búsqueda inteligente en todo tu material")
+    st.title("🎓 Asistente 4 Materias + IA Avanzada")
+    st.markdown("### Ahora con generación inteligente de respuestas")
     
-    # Inicializar sistema de búsqueda
+    # Inicializar sistemas
     if "sistema_busqueda" not in st.session_state:
         st.session_state.sistema_busqueda = SistemaBusqueda()
     
-    # Cargar y procesar conocimiento
-    with st.spinner("🧠 Procesando conocimiento para búsqueda semántica..."):
-        if st.session_state.sistema_busqueda.cargar_y_procesar_conocimiento():
-            st.success(f"✅ Sistema de búsqueda listo - {len(st.session_state.sistema_busqueda.documentos)} párrafos procesados")
-        else:
-            st.warning("⚠️ Sistema funcionando en modo básico - verifica la carpeta 'conocimiento'")
+    if "sistema_ia" not in st.session_state:
+        st.session_state.sistema_ia = SistemaIA()
+    
+    # Cargar sistemas
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        with st.spinner("🧠 Procesando conocimiento..."):
+            if st.session_state.sistema_busqueda.cargar_y_procesar_conocimiento():
+                st.success(f"✅ Búsqueda semántica - {len(st.session_state.sistema_busqueda.documentos)} párrafos")
+    
+    with col2:
+        with st.spinner("🤖 Cargando IA..."):
+            if st.session_state.sistema_ia.cargar_modelo_ligero():
+                st.success("✅ Modelo IA cargado")
+            else:
+                st.info("🔧 IA no disponible - usando modo básico")
     
     # Sidebar mejorado
     with st.sidebar:
@@ -235,36 +331,40 @@ def main():
         st.subheader(f"{profesor['emoji']} {profesor['nombre']}")
         st.write(f"**Estilo:** {profesor['estilo']}")
         
+        # Selector de modo de respuesta
+        st.markdown("---")
+        st.subheader("⚡ Modo de Respuesta")
+        modo_respuesta = st.radio(
+            "Selecciona el modo:",
+            ["Automático", "Solo Búsqueda", "Solo IA"],
+            index=0,
+            help="Automático: Combina IA y búsqueda. Solo Búsqueda: Más rápido. Solo IA: Más creativo."
+        )
+        
+        st.markdown("---")
         st.markdown("**Consejos clave:**")
         for consejo in profesor['consejos'][:3]:
             st.write(f"• {consejo}")
         
-        # Mostrar estadísticas del sistema
+        # Estadísticas del sistema
         st.markdown("---")
         st.subheader("🔍 Estado del Sistema")
         
         if st.session_state.sistema_busqueda.documentos:
-            st.success(f"📊 {len(st.session_state.sistema_busqueda.documentos)} párrafos indexados")
-            st.info(f"🔤 {len(st.session_state.sistema_busqueda.vectorizer.get_feature_names_out() if st.session_state.sistema_busqueda.vectorizer else 0)} términos en vocabulario")
+            st.success(f"📊 {len(st.session_state.sistema_busqueda.documentos)} párrafos")
         else:
-            st.warning("📝 Sin documentos procesados")
+            st.warning("📝 Sin documentos")
         
-        # Contar documentos por materia
-        st.markdown("**📂 Documentos por materia:**")
-        if st.session_state.sistema_busqueda.nombres_docs:
-            conteo_materias = {}
-            for nombre in st.session_state.sistema_busqueda.nombres_docs:
-                materia = nombre.split('/')[0]
-                conteo_materias[materia] = conteo_materias.get(materia, 0) + 1
-            
-            for materia, count in conteo_materias.items():
-                emoji = PROFESORES.get(materia, {}).get('emoji', '📄')
-                st.write(f"• {emoji} {materia}: {count} párrafos")
+        if st.session_state.sistema_ia.modelo_ia:
+            st.success("🤖 IA disponible")
+        else:
+            st.warning("🤖 IA no disponible")
         
         st.markdown("---")
         
-        if st.button("🔄 Reprocesar Conocimiento", use_container_width=True):
+        if st.button("🔄 Reiniciar Sistemas", use_container_width=True):
             st.session_state.sistema_busqueda = SistemaBusqueda()
+            st.session_state.sistema_ia = SistemaIA()
             st.rerun()
         
         if st.button("🧹 Limpiar Chat", use_container_width=True):
@@ -274,7 +374,7 @@ def main():
     # Inicializar chat
     if "messages" not in st.session_state:
         st.session_state.messages = [
-            {"role": "assistant", "content": f"¡Hola! Soy {PROFESORES[selected_materia]['nombre']} {PROFESORES[selected_materia]['emoji']}. Ahora puedo buscar inteligentemente en todo tu material usando búsqueda semántica. ¿En qué puedo ayudarte?"}
+            {"role": "assistant", "content": f"¡Hola! Soy {PROFESORES[selected_materia]['nombre']} {PROFESORES[selected_materia]['emoji']}. Ahora tengo capacidades de IA avanzada combinadas con búsqueda semántica. ¿En qué puedo ayudarte?"}
         ]
     
     # Mostrar historial de chat
@@ -284,15 +384,31 @@ def main():
     
     # Input del usuario
     if prompt := st.chat_input(f"Pregunta sobre {selected_materia.replace('_', ' ')}..."):
-        # Agregar mensaje del usuario
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
             st.markdown(prompt)
         
-        # Generar respuesta
+        # Generar respuesta según el modo seleccionado
         with st.chat_message("assistant"):
-            with st.spinner(f"🔍 {PROFESORES[selected_materia]['nombre']} busca semánticamente..."):
-                respuesta = generar_respuesta_inteligente(prompt, selected_materia, st.session_state.sistema_busqueda)
+            with st.spinner(f"💭 {PROFESORES[selected_materia]['nombre']} piensa..."):
+                if modo_respuesta == "Solo Búsqueda":
+                    respuesta = generar_respuesta_semantica(
+                        prompt, 
+                        selected_materia, 
+                        st.session_state.sistema_busqueda.buscar_similaridad(prompt),
+                        PROFESORES[selected_materia]
+                    )
+                elif modo_respuesta == "Solo IA" and st.session_state.sistema_ia.modelo_ia:
+                    respuesta = st.session_state.sistema_ia.generar_respuesta_ia(
+                        f"Responde como {PROFESORES[selected_materia]['nombre']} a: {prompt}"
+                    ) or "No pude generar una respuesta con IA en este momento."
+                else:
+                    respuesta = generar_respuesta_avanzada(
+                        prompt, 
+                        selected_materia, 
+                        st.session_state.sistema_busqueda,
+                        st.session_state.sistema_ia
+                    )
                 
                 # Efecto de escritura
                 message_placeholder = st.empty()
@@ -309,24 +425,32 @@ def main():
     
     # Footer informativo
     st.markdown("---")
-    st.success("""
-    **🚀 ¡Búsqueda Semántica Implementada!**
     
-    **✅ Nuevas capacidades:**
-    - Búsqueda por similitud semántica (TF-IDF + Cosine Similarity)
-    - Procesamiento inteligente de párrafos
-    - Resultados ordenados por relevancia
-    - Porcentajes de similitud
-    - Vocabulario especializado por materia
+    col1, col2, col3 = st.columns(3)
     
-    **🔍 Cómo funciona:**
-    1. **TF-IDF**: Identifica términos importantes en tu material
-    2. **Cosine Similarity**: Calcula similitud entre pregunta y contenido
-    3. **Ranking**: Ordena resultados por relevancia
-    4. **Contexto**: Muestra los párrafos más relevantes
+    with col1:
+        st.info("""
+        **🤖 IA Avanzada**
+        - Generación inteligente de respuestas
+        - Personalidades de profesores
+        - Contexto semántico
+        """)
     
-    **📈 Próximo paso:** Agregar generación de respuestas con IA
-    """)
+    with col2:
+        st.success("""
+        **🔍 Búsqueda Semántica**
+        - TF-IDF + Cosine Similarity
+        - 1000+ términos especializados
+        - Resultados por relevancia
+        """)
+    
+    with col3:
+        st.warning("""
+        **🎯 Próximas Mejoras**
+        - Ejercicios interactivos
+        - Evaluaciones automáticas
+        - Análisis de progreso
+        """)
 
 if __name__ == "__main__":
     main()
