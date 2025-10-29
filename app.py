@@ -5,22 +5,20 @@ import re
 import streamlit as st
 from langchain.text_splitters import RecursiveCharacterTextSplitter
 from langchain.document_loaders import DirectoryLoader, TextLoader
-from langchain_chroma import Chroma
-from langchain_community.embeddings import HuggingFaceEmbeddings # Embeddings gratuitos
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.vectorstores import DocArrayInMemoryVectorStore # Vector Store en memoria
 from langchain.chains import RetrievalQA
-from langchain.llms.fake import FakeListLLM # LLM Simulado y gratuito
+from langchain.llms.fake import FakeListLLM 
 
 # --- Constantes de Configuración ---
 KNOWLEDGE_PATH = "conocimiento/"
-CHROMA_PERSIST_DIR = "chroma_db"
 # Modelo de embeddings local y gratuito
 EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2" 
 
 # --- LLM Simulado (Completamente gratuito y sin clave) ---
-# Este LLM simulará la respuesta pero las CITACIONES serán REALES.
-# Se usa para demostrar que la parte RAG (filtrado y citación) funciona sin costo.
+# Simula una respuesta para demostrar que las CITACIONES son REALES.
 def get_fake_llm():
-    # Definimos una lista de respuestas que el modelo "dará" en secuencia.
+    # El LLM "responde" esto en secuencia. La parte importante es que usa el contexto RAG.
     responses = * 5 
     
     return FakeListLLM(responses=responses)
@@ -29,79 +27,66 @@ def get_subjects():
     """Detecta dinámicamente las materias (subdirectorios) disponibles."""
     subjects =
     if os.path.exists(KNOWLEDGE_PATH):
-        # Listar subdirectorios en 'conocimiento/'
         for item in os.listdir(KNOWLEDGE_PATH):
             item_path = os.path.join(KNOWLEDGE_PATH, item)
             if os.path.isdir(item_path):
-                # Formato: 'estadistica' -> 'Estadistica'
                 subjects.append(item.replace('_', ' ').title())
     return sorted(subjects)
 
 def extract_subject_metadata(path: str) -> dict:
-    """Función crítica para extraer el metadato 'subject' (materia) 
-    del path para permitir el filtrado dinámico en ChromaDB."""
+    """Extrae el metadato 'subject' (materia) del path para el filtrado dinámico."""
     
     # Busca el nombre del subdirectorio inmediatamente después de 'conocimiento/'
     match = re.search(r"conocimiento/([^/]+)/", path)
     if match:
-        # El metadato debe coincidir con el nombre usado en el checkbox
         subject = match.group(1).replace('_', ' ').title()
         return {"source": path, "subject": subject}
     return {"source": path, "subject": "General"}
 
 @st.cache_resource(show_spinner=False)
 def get_vector_store():
-    """Inicializa o carga la base de datos vectorial persistida y cacheada."""
+    """Inicializa y construye la base vectorial IN-MEMORY."""
     
     # USO DE EMBEDDINGS GRATUITOS Y LOCALES
     embeddings = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL_NAME)
 
-    if os.path.exists(CHROMA_PERSIST_DIR) and os.listdir(CHROMA_PERSIST_DIR):
-        with st.spinner("Cargando base de conocimiento persistida..."):
-            # Carga rápida: Carga el índice desde el disco (evita re-embedding)
-            vector_store = Chroma(
-                persist_directory=CHROMA_PERSIST_DIR, 
-                embedding_function=embeddings
-            )
-            return vector_store
-    else:
-        # Ingestión completa: Se ejecuta solo en el primer uso (o si se borra chroma_db)
-        with st.spinner("Indexando documentos por primera vez (puede tardar en Streamlit Cloud, ¡pero solo una vez!)..."):
-            
-            # Carga de documentos con mapeo de metadatos custom
-            loader = DirectoryLoader(
-                KNOWLEDGE_PATH,
-                glob="**/*.txt", # Soporte para todos los TXT
-                loader_cls=TextLoader,
-                loader_kwargs={'autodetect_encoding': True},
-                silent_errors=True
-            )
-            documents = loader.load()
+    # NOTA: Este proceso de indexación se ejecuta en CADA inicio de la app 
+    # porque NO estamos usando persistencia (sin Chroma).
+    with st.spinner("Indexando documentos en memoria (cargando conocimientos)..."):
+        
+        # 1. Carga de documentos con mapeo de metadatos custom
+        loader = DirectoryLoader(
+            KNOWLEDGE_PATH,
+            glob="**/*.txt",
+            loader_cls=TextLoader,
+            loader_kwargs={'autodetect_encoding': True},
+            silent_errors=True
+        )
+        documents = loader.load()
 
-            # Aplicar la función de extracción de metadatos
-            for doc in documents:
-                new_metadata = extract_subject_metadata(doc.metadata.get('source', ''))
-                doc.metadata.update(new_metadata)
+        # 2. Aplicar la función de extracción de metadatos
+        for doc in documents:
+            new_metadata = extract_subject_metadata(doc.metadata.get('source', ''))
+            doc.metadata.update(new_metadata)
 
-            # Chunking (división en fragmentos)
-            text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
-            texts = text_splitter.split_documents(documents)
+        # 3. Chunking (división en fragmentos)
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
+        texts = text_splitter.split_documents(documents)
 
-            # Creación y persistencia
-            vector_store = Chroma.from_documents(
-                documents=texts,
-                embedding=embeddings,
-                persist_directory=CHROMA_PERSIST_DIR
-            )
-            # Guarda en disco para futuras ejecuciones (CRÍTICO para Streamlit Cloud)
-            vector_store.persist() 
-            return vector_store
+        # 4. Creación del Vector Store IN-MEMORY
+        vector_store = DocArrayInMemoryVectorStore.from_documents(
+            documents=texts,
+            embedding=embeddings
+        )
+        # NO se usa.persist() ya que es una solución en memoria
+        return vector_store
 
 def create_metadata_filter(active_subjects: list) -> dict:
-    """Crea el filtro de metadatos 'where' para ChromaDB."""
+    """Crea el filtro de metadatos 'where' para la base vectorial."""
     if not active_subjects:
         return None
     
+    # Crea una lista de cláusulas OR/IN para los subjects seleccionados
     filter_clauses = [{"subject": {"$eq": sub}} for sub in active_subjects]
     return {"$or": filter_clauses}
 
@@ -133,10 +118,9 @@ def sidebar_config(subjects):
     """Configura la barra lateral para la selección de fuentes estilo NotebookLM."""
     st.sidebar.title("📚 Fuentes de Conocimiento")
     st.sidebar.markdown("Selecciona las materias que el chatbot debe usar para responder.")
-    st.sidebar.caption("💡 Esta versión es 100% gratuita y sin claves. El texto es simulado, pero las **citaciones** son el resultado de la búsqueda RAG.")
+    st.sidebar.caption("⚠️ Esta versión es 100% gratuita/sin claves. El texto es simulado, pero las **citaciones** son el resultado de la búsqueda RAG.")
 
     if 'active_subjects' not in st.session_state:
-        # Por defecto, todas las materias están activas
         st.session_state['active_subjects'] = subjects
 
     active_subjects_update =
@@ -153,7 +137,6 @@ def sidebar_config(subjects):
 
     st.session_state['active_subjects'] = active_subjects_update
 
-    # Configuración de estilo del LLM (Simulación de rol, aunque no afecte al LLM Falso)
     st.sidebar.subheader("Estilo de Conversación (Simulado)")
     style = st.sidebar.selectbox(
         "Elige un rol para el tutor:",
@@ -165,8 +148,8 @@ def sidebar_config(subjects):
     return st.session_state['active_subjects']
 
 def main():
-    st.set_page_config(page_title="Tutor RAG Gratuito (Estilo NotebookLM)", layout="wide")
-    st.title("👨‍🏫 Tutor Temático RAG: Aprendizaje Adaptativo (Versión Gratuita)")
+    st.set_page_config(page_title="Tutor RAG Gratuito (Sin Chroma)", layout="wide")
+    st.title("👨‍🏫 Tutor Temático RAG: (Versión Gratuita y en Memoria)")
 
     # 1. Obtener la lista de materias disponibles
     subjects = get_subjects()
@@ -174,7 +157,7 @@ def main():
          st.error("No se encontraron subdirectorios de materias en 'conocimiento/'.")
          st.stop()
 
-    # 2. Inicializar Vector Store (con caché)
+    # 2. Inicializar Vector Store (IN-MEMORY)
     vector_store = get_vector_store()
 
     # 3. Configurar barra lateral y obtener materias activas
@@ -211,18 +194,16 @@ def main():
             rag_chain = get_rag_chain(vector_store, active_subjects)
 
             # 6.2 Ejecutar la cadena RAG
-            with st.spinner("Buscando fuentes relevantes..."):
-                # No se necesita un prompt de sistema, ya que el LLM es falso
+            with st.spinner("Buscando fuentes relevantes (indexando en memoria, espere un momento)..."):
                 response = rag_chain.invoke({"query": prompt})
             
             full_response = response['result']
             
-            # 6.3 Post-procesamiento para CITACIONES (ESTO ES REAL)
+            # 6.3 Post-procesamiento para CITACIONES (ESTO ES REAL y funcional)
             citations =
             if response.get("source_documents"):
                 citations.append("\n\n---\n\n**Fuentes Citadas (Estilo NotebookLM - RAG Real):**")
                 
-                # Procesar cada documento recuperado
                 for i, doc in enumerate(response["source_documents"]):
                     source_path = doc.metadata.get("source", "Fuente Desconocida")
                     subject_name = doc.metadata.get("subject", "General")
