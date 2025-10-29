@@ -6,22 +6,24 @@ import streamlit as st
 from langchain.text_splitters import RecursiveCharacterTextSplitter
 from langchain.document_loaders import DirectoryLoader, TextLoader
 from langchain_chroma import Chroma
-from langchain_google_genai import GoogleGenAIEmbeddings, ChatGoogleGenerativeAI
+from langchain_community.embeddings import HuggingFaceEmbeddings # Embeddings gratuitos
 from langchain.chains import RetrievalQA
+from langchain.llms.fake import FakeListLLM # LLM Simulado y gratuito
 
 # --- Constantes de Configuración ---
 KNOWLEDGE_PATH = "conocimiento/"
 CHROMA_PERSIST_DIR = "chroma_db"
-LLM_MODEL = "gemini-2.5-flash"
-EMBEDDING_MODEL = "models/text-embedding-004"
+# Modelo de embeddings local y gratuito
+EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2" 
 
-def get_api_key():
-    """Obtiene la clave API de forma segura a través de st.secrets."""
-    try:
-        return st.secrets
-    except KeyError:
-        st.error("Error: La clave GOOGLE_API_KEY no está configurada en st.secrets.")
-        st.stop()
+# --- LLM Simulado (Completamente gratuito y sin clave) ---
+# Este LLM simulará la respuesta pero las CITACIONES serán REALES.
+# Se usa para demostrar que la parte RAG (filtrado y citación) funciona sin costo.
+def get_fake_llm():
+    # Definimos una lista de respuestas que el modelo "dará" en secuencia.
+    responses = * 5 
+    
+    return FakeListLLM(responses=responses)
 
 def get_subjects():
     """Detecta dinámicamente las materias (subdirectorios) disponibles."""
@@ -48,10 +50,11 @@ def extract_subject_metadata(path: str) -> dict:
     return {"source": path, "subject": "General"}
 
 @st.cache_resource(show_spinner=False)
-def get_vector_store(api_key):
+def get_vector_store():
     """Inicializa o carga la base de datos vectorial persistida y cacheada."""
     
-    embeddings = GoogleGenAIEmbeddings(model=EMBEDDING_MODEL, api_key=api_key)
+    # USO DE EMBEDDINGS GRATUITOS Y LOCALES
+    embeddings = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL_NAME)
 
     if os.path.exists(CHROMA_PERSIST_DIR) and os.listdir(CHROMA_PERSIST_DIR):
         with st.spinner("Cargando base de conocimiento persistida..."):
@@ -63,7 +66,7 @@ def get_vector_store(api_key):
             return vector_store
     else:
         # Ingestión completa: Se ejecuta solo en el primer uso (o si se borra chroma_db)
-        with st.spinner("Indexando documentos por primera vez (puede tardar)..."):
+        with st.spinner("Indexando documentos por primera vez (puede tardar en Streamlit Cloud, ¡pero solo una vez!)..."):
             
             # Carga de documentos con mapeo de metadatos custom
             loader = DirectoryLoader(
@@ -99,20 +102,15 @@ def create_metadata_filter(active_subjects: list) -> dict:
     if not active_subjects:
         return None
     
-    # Crea una lista de cláusulas OR/IN para los subjects seleccionados
     filter_clauses = [{"subject": {"$eq": sub}} for sub in active_subjects]
     return {"$or": filter_clauses}
 
 
-def get_rag_chain(vector_store, api_key, active_subjects: list):
-    """Construye la cadena RAG con el retriever filtrado."""
+def get_rag_chain(vector_store, active_subjects: list):
+    """Construye la cadena RAG con el LLM Simulado y el retriever filtrado."""
     
-    llm = ChatGoogleGenerativeAI(
-        model=LLM_MODEL,
-        api_key=api_key,
-        temperature=0.1,
-        streaming=False # Simplificamos a no-streaming para usar RetrievalQA
-    )
+    # LLM GRATUITO: Usa el LLM Falso/Simulado
+    llm = get_fake_llm()
 
     metadata_filter = create_metadata_filter(active_subjects)
     
@@ -135,6 +133,7 @@ def sidebar_config(subjects):
     """Configura la barra lateral para la selección de fuentes estilo NotebookLM."""
     st.sidebar.title("📚 Fuentes de Conocimiento")
     st.sidebar.markdown("Selecciona las materias que el chatbot debe usar para responder.")
+    st.sidebar.caption("💡 Esta versión es 100% gratuita y sin claves. El texto es simulado, pero las **citaciones** son el resultado de la búsqueda RAG.")
 
     if 'active_subjects' not in st.session_state:
         # Por defecto, todas las materias están activas
@@ -154,11 +153,11 @@ def sidebar_config(subjects):
 
     st.session_state['active_subjects'] = active_subjects_update
 
-    # Configuración de estilo del LLM
-    st.sidebar.subheader("Estilo de Conversación")
+    # Configuración de estilo del LLM (Simulación de rol, aunque no afecte al LLM Falso)
+    st.sidebar.subheader("Estilo de Conversación (Simulado)")
     style = st.sidebar.selectbox(
         "Elige un rol para el tutor:",
-       ,
+       , 
         index=0
     )
     st.session_state['llm_style'] = style
@@ -166,22 +165,19 @@ def sidebar_config(subjects):
     return st.session_state['active_subjects']
 
 def main():
-    st.set_page_config(page_title="Tutor RAG (Estilo NotebookLM)", layout="wide")
-    st.title("👨‍🏫 Tutor Temático RAG: Aprendizaje Adaptativo")
+    st.set_page_config(page_title="Tutor RAG Gratuito (Estilo NotebookLM)", layout="wide")
+    st.title("👨‍🏫 Tutor Temático RAG: Aprendizaje Adaptativo (Versión Gratuita)")
 
-    # 1. Cargar secretos y verificar API Key
-    api_key = get_api_key()
-
-    # 2. Obtener la lista de materias disponibles
+    # 1. Obtener la lista de materias disponibles
     subjects = get_subjects()
     if not subjects:
          st.error("No se encontraron subdirectorios de materias en 'conocimiento/'.")
          st.stop()
 
-    # 3. Inicializar Vector Store (con caché)
-    vector_store = get_vector_store(api_key)
+    # 2. Inicializar Vector Store (con caché)
+    vector_store = get_vector_store()
 
-    # 4. Configurar barra lateral y obtener materias activas
+    # 3. Configurar barra lateral y obtener materias activas
     active_subjects = sidebar_config(subjects)
     
     if not active_subjects:
@@ -189,16 +185,16 @@ def main():
     else:
         st.sidebar.success(f"Fuentes activas: {len(active_subjects)}/{len(subjects)}")
 
-    # 5. Inicializar historial de chat
+    # 4. Inicializar historial de chat
     if "messages" not in st.session_state:
         st.session_state["messages"] =
 
-    # 6. Mostrar historial de chat
+    # 5. Mostrar historial de chat
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
-    # 7. Procesar entrada del usuario
+    # 6. Procesar entrada del usuario
     if prompt := st.chat_input("Pregunta sobre las materias seleccionadas..."):
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
@@ -211,23 +207,20 @@ def main():
                  st.session_state.messages.append({"role": "assistant", "content": response_content})
                  return
 
-            # 7.1 Construir el RAG Chain dinámico con el filtro
-            rag_chain = get_rag_chain(vector_store, api_key, active_subjects)
+            # 6.1 Construir el RAG Chain dinámico con el LLM FALSO
+            rag_chain = get_rag_chain(vector_store, active_subjects)
 
-            # 7.2 Insertar prompt de estilo para contextualización
-            system_prompt = f"Tu rol es el de un {st.session_state['llm_style']}. Utiliza únicamente la información proporcionada en el contexto para responder la siguiente pregunta, sé detallado y útil:"
-            full_prompt = f"{system_prompt}\n\nPregunta: {prompt}"
-
-            # 7.3 Ejecutar la cadena RAG
-            with st.spinner("Buscando y generando respuesta..."):
-                response = rag_chain.invoke({"query": full_prompt})
+            # 6.2 Ejecutar la cadena RAG
+            with st.spinner("Buscando fuentes relevantes..."):
+                # No se necesita un prompt de sistema, ya que el LLM es falso
+                response = rag_chain.invoke({"query": prompt})
             
             full_response = response['result']
             
-            # 7.4 Post-procesamiento para CITACIONES
+            # 6.3 Post-procesamiento para CITACIONES (ESTO ES REAL)
             citations =
             if response.get("source_documents"):
-                citations.append("\n\n---\n\n**Fuentes Citadas (Estilo NotebookLM):**")
+                citations.append("\n\n---\n\n**Fuentes Citadas (Estilo NotebookLM - RAG Real):**")
                 
                 # Procesar cada documento recuperado
                 for i, doc in enumerate(response["source_documents"]):
@@ -238,11 +231,11 @@ def main():
                     citation_text = f"**[{i+1}]** Materia: *{subject_name}*. Archivo: `{file_name}`."
                     citations.append(citation_text)
                     
-            # 7.5 Mostrar la respuesta completa (texto + citas)
+            # 6.4 Mostrar la respuesta completa (texto simulado + citas reales)
             final_content = full_response + "\n".join(citations)
             st.markdown(final_content)
             
-            # 8. Actualizar historial de chat
+            # 7. Actualizar historial de chat
             st.session_state.messages.append({"role": "assistant", "content": final_content})
 
 if __name__ == "__main__":
