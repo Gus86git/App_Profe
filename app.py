@@ -92,8 +92,6 @@ def generar_respuesta_profesor(pregunta, materia, conocimiento):
     contexto_relevante = ""
     if contexto_completo:
         # Usaremos la primera parte del texto como contexto simulado
-        contexto_lines = contexto_completo.split('\n')
-        # Buscamos un fragmento de 500 caracteres
         contexto_relevante = contexto_completo[:500] 
 
     # 2. Generación de respuesta (simulada)
@@ -116,7 +114,34 @@ def generar_respuesta_profesor(pregunta, materia, conocimiento):
         
         He encontrado este fragmento en tus materiales de **{materia.replace('_', ' ').title()}** que puede serte útil:
         
-        *...{contexto_relevante.strip().replace('--- Archivo:', '\n
+        *...{contexto_relevante.strip().replace('--- Archivo:', '\n--- Archivo:')}...*
+        """
+    
+    # 4. Consejo adicional (opcional)
+    respuesta_base += f"\n\n💡 **Consejo adicional de {profesor['nombre']}:** {random.choice(profesor['consejos'])}"
+
+    return respuesta_base
+
+# =========================================
+# INTERFAZ PRINCIPAL
+# =========================================
+def main():
+    st.title("🎓 Asistente 4 Materias - Streamlit Cloud")
+    st.markdown("### Tu compañero académico especializado")
+    
+    # 1. Sidebar
+    with st.sidebar:
+        st.header("📚 Selecciona Materia")
+        
+        selected_materia = st.selectbox(
+            "Elige tu materia:",
+            list(PROFESORES.keys()),
+            format_func=lambda x: {
+                "estadistica": "📊 Estadística (Ferrare)",
+                "desarrollo_ia": "🤖 Desarrollo IA", 
+                "campo_laboral": "💼 Campo Laboral (Acri)",
+                "comunicacion": "🎯 Comunicación"
+            }[x]
         )
         
         profesor = PROFESORES[selected_materia]
@@ -141,7 +166,7 @@ def generar_respuesta_profesor(pregunta, materia, conocimiento):
                 st.session_state.messages =
             st.rerun()
     
-    # 2. Cargar conocimiento (la parte más lenta)
+    # 2. Cargar conocimiento
     with st.spinner("📚 Cargando material de estudio (solo texto)..."):
         conocimiento = cargar_conocimiento()
         
