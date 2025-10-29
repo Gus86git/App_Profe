@@ -5,7 +5,7 @@ from groq import Groq
 # Initialize the Groq client
 try:
     # Get the API key from Streamlit's secrets
-    client = Groq(api_key=st.secrets["GROQ_API_KEY"])
+    client = Groq(api_key=st.secrets["groq_api_key"])
 except Exception as e:
     st.error(f"Failed to initialize Groq client: {e}")
     st.stop()
