@@ -1,218 +1,117 @@
-# app.py
-
-import streamlit as st
 import os
-import time
-import random
+import streamlit as st
+from groq import Groq
 
-# =========================================
-# CONFIGURACIÓN DE PROFESORES
-# =========================================
-PROFESORES = {
-    "estadistica": {
-        "nombre": "Profesor Ferrarre",
-        "emoji": "📊",
-        "estilo": "Práctico y numérico",
-        "consejos":
-    },
-    "desarrollo_ia": {
-        "nombre": "Especialista IA", 
-        "emoji": "🤖",
-        "estilo": "Técnico y práctico",
-        "consejos":
-    },
-    "campo_laboral": {
-        "nombre": "Profesora Acri",
-        "emoji": "💼", 
-        "estilo": "Exigente y profesional",
-        "consejos":
-    },
-    "comunicacion": {
-        "nombre": "Especialista Comunicación",
-        "emoji": "🎯",
-        "estilo": "Claro y estructurado", 
-        "consejos": [
-            "Estructura tu mensaje antes de hablar",
-            "Practica la escucha activa",
-            "Adapta tu lenguaje al público",
-            "Usa ejemplos concretos en tus explicaciones",
-            "Maneja bien los tiempos en presentaciones"
-        ]
-    }}
-
-# =========================================
-# CONFIGURACIÓN STREAMLIT
-# =========================================
+# Configuración de la página
 st.set_page_config(
-    page_title="Asistente 4 Materias - Streamlit Cloud",
-    page_icon="🎓",
-    layout="wide")
+    page_title="Asistente IA con Groq",
+    page_icon="🤖", 
+    layout="wide"
+)
 
-# =========================================
-# FUNCIONES PRINCIPALES (CARGA DE TEXTO)
-# =========================================
+# Título principal
+st.title("💬 Asistente IA con Groq")
+st.markdown("### Potenciado por Llama 3.3 70B - Ultra rápido 🚀")
 
-@st.cache_resource(show_spinner=False)
-def cargar_conocimiento():
-    """Carga todo el conocimiento de los archivos de texto en un diccionario."""
-    conocimiento = {}
-    try:
-        base_path = "conocimiento"
-        if not os.path.exists(base_path):
-            return conocimiento
-            
-        for materia in os.listdir(base_path):
-            materia_path = os.path.join(base_path, materia)
-            if os.path.isdir(materia_path):
-                # Guarda todo el texto de la materia en una sola entrada
-                contenido_materia = ""
-                for archivo in os.listdir(materia_path):
-                    if archivo.endswith('.txt'):
-                        archivo_path = os.path.join(materia_path, archivo)
-                        try:
-                            with open(archivo_path, 'r', encoding='utf-8') as f:
-                                # Etiqueta el contenido con el nombre del archivo (para simular citación)
-                                contenido_materia += f"\n--- Archivo: {archivo} ---\n{f.read()}\n"
-                        except Exception as e:
-                            st.warning(f"⚠️ Error leyendo {archivo_path}")
-                conocimiento[materia] = contenido_materia
-        return conocimiento
-    except Exception as e:
-        st.error(f"❌ Error cargando conocimiento: {e}")
-        return {}
+# Inicializar cliente Groq
+try:
+    # En Streamlit Cloud usa st.secrets, localmente usa .env
+    if "GROQ_API_KEY" in st.secrets:
+        api_key = st.secrets["GROQ_API_KEY"]
+    else:
+        from dotenv import load_dotenv
+        load_dotenv()
+        api_key = os.getenv("GROQ_API_KEY")
+    
+    client = Groq(api_key=api_key)
+    st.success("✅ Groq client configurado correctamente")
+    
+except Exception as e:
+    st.error(f"❌ Error configurando Groq: {str(e)}")
+    st.info("💡 Asegúrate de configurar GROQ_API_KEY en los secrets de Streamlit Cloud")
+    st.stop()
 
-def generar_respuesta_profesor(pregunta, materia, conocimiento):
-    """Genera respuesta simulada con contexto y personalidad."""
-    profesor = PROFESORES[materia]
+# Sidebar
+with st.sidebar:
+    st.image("https://cdn-icons-png.flaticon.com/512/4712/4712039.png", width=100)
+    st.title("Configuración 🤖")
     
-    # 1. Recuperación simulada de contexto
-    contexto_completo = conocimiento.get(materia, "")
+    # Selector de modelo
+    modelo = st.selectbox(
+        "Modelo:",
+        ["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "mixtral-8x7b-32768"],
+        index=0
+    )
     
-    # Intenta encontrar un snippet de contexto (simula RAG)
-    contexto_relevante = ""
-    if contexto_completo:
-        # Usaremos la primera parte del texto como contexto simulado
-        contexto_relevante = contexto_completo[:500] 
+    memory_enabled = st.toggle("Activar memoria de chat", value=True)
+    
+    st.markdown("---")
+    if st.button("🧹 Limpiar Chat", use_container_width=True):
+        st.session_state.messages = []
+        st.rerun()
 
-    # 2. Generación de respuesta (simulada)
-    respuesta_base = f"""
-    {profesor['emoji']} **¡Atención! {profesor['nombre']} (Estilo {profesor['estilo']}):**
+# Inicializar historial de chat
+if "messages" not in st.session_state:
+    st.session_state.messages = [
+        {"role": "assistant", "content": "¡Hola! Soy tu asistente IA potenciado por Groq. ¿En qué puedo ayudarte hoy? 🚀"}
+    ]
 
-    Para tu consulta sobre **'{pregunta}'**, recuerda que el enfoque en **{materia.replace('_', ' ').title()}** es clave.
-    
-    En este momento, te recomiendo concentrarte en: {random.choice(profesor['consejos'])}.
-    
-    """
-    
-    # 3. Adición de citación simulada
-    if contexto_relevante:
-        respuesta_base += f"""
-        
-        --—
-        
-        **📚 Referencia RAG (Simulada):**
-        
-        He encontrado este fragmento en tus materiales de **{materia.replace('_', ' ').title()}** que puede serte útil:
-        
-        *...{contexto_relevante.strip().replace('--- Archivo:', '\n--- Archivo:')}...*
-        """
-    
-    # 4. Consejo adicional (opcional)
-    respuesta_base += f"\n\n💡 **Consejo adicional de {profesor['nombre']}:** {random.choice(profesor['consejos'])}"
+# Mostrar historial de chat
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
 
-    return respuesta_base
-
-# =========================================
-# INTERFAZ PRINCIPAL
-# =========================================
-def main():
-    st.title("🎓 Asistente 4 Materias - Streamlit Cloud")
-    st.markdown("### Tu compañero académico especializado")
+# Input del usuario
+if prompt := st.chat_input("Escribe tu mensaje aquí..."):
+    # Agregar mensaje del usuario
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user"):
+        st.markdown(prompt)
     
-    # 1. Sidebar
-    with st.sidebar:
-        st.header("📚 Selecciona Materia")
-        
-        selected_materia = st.selectbox(
-            "Elige tu materia:",
-            list(PROFESORES.keys()),
-            format_func=lambda x: {
-                "estadistica": "📊 Estadística (Ferrare)",
-                "desarrollo_ia": "🤖 Desarrollo IA", 
-                "campo_laboral": "💼 Campo Laboral (Acri)",
-                "comunicacion": "🎯 Comunicación"
-            }[x]
-        )
-        
-        profesor = PROFESORES[selected_materia]
-        st.subheader(f"{profesor['emoji']} {profesor['nombre']}")
-        st.write(f"**Estilo:** {profesor['estilo']}")
-        
-        st.markdown("**Consejos clave:**")
-        for consejo in profesor['consejos'][:3]:
-            st.write(f"• {consejo}")
-        
-        st.markdown("---")
-        
-        st.subheader("🔍 Estado del Sistema")
-        st.success("✅ Streamlit (Única dependencia)")
-        st.success("✅ RAG (Recuperación) Simulada por Texto")
-        st.success("✅ 100% Gratis y Sin Claves API")
-        
-        st.markdown("---")
-        
-        if st.button("🧹 Limpiar Conversación", use_container_width=True):
-            if "messages" in st.session_state:
-                st.session_state.messages =
-            st.rerun()
-    
-    # 2. Cargar conocimiento
-    with st.spinner("📚 Cargando material de estudio (solo texto)..."):
-        conocimiento = cargar_conocimiento()
-        
-    # 3. Inicializar chat
-    if "messages" not in st.session_state:
-        st.session_state.messages =}. La base de conocimiento está cargada. ¿En qué puedo ayudarte con {selected_materia.replace('_', ' ').title()}? 🎓"}
-        ]
-    
-    # 4. Mostrar historial de chat
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
-    
-    # 5. Input del usuario
-    if prompt := st.chat_input(f"Escribe tu pregunta sobre {selected_materia.replace('_', ' ')}..."):
-        # Agregar mensaje del usuario
-        st.session_state.messages.append({"role": "user", "content": prompt})
-        with st.chat_message("user"):
-            st.markdown(prompt)
-        
-        # Generar respuesta
-        with st.chat_message("assistant"):
-            with st.spinner(f"💭 {profesor['nombre']} está revisando los materiales..."):
-                respuesta = generar_respuesta_profesor(prompt, selected_materia, conocimiento)
+    # Generar respuesta
+    with st.chat_message("assistant"):
+        with st.spinner("🤖 Generando respuesta..."):
+            try:
+                # Preparar mensajes para la API
+                if memory_enabled:
+                    messages = [
+                        {"role": "system", "content": "Eres un asistente IA útil y amigable. Responde en español."},
+                        *st.session_state.messages
+                    ]
+                else:
+                    messages = [
+                        {"role": "system", "content": "Eres un asistente IA útil y amigable. Responde en español."},
+                        {"role": "user", "content": prompt}
+                    ]
                 
-                # Efecto de escritura
+                # Llamar a Groq
+                response = client.chat.completions.create(
+                    messages=messages,
+                    model=modelo,
+                    temperature=0.7,
+                    max_tokens=1024
+                )
+                
+                bot_reply = response.choices[0].message.content
+                
+                # Mostrar respuesta con efecto de escritura
                 message_placeholder = st.empty()
                 full_response = ""
                 
-                for chunk in respuesta.split():
+                for chunk in bot_reply.split():
                     full_response += chunk + " "
-                    time.sleep(0.01) # Velocidad aumentada para Streamlit Cloud
                     message_placeholder.markdown(full_response + "▌")
                 
                 message_placeholder.markdown(full_response)
-        
-        st.session_state.messages.append({"role": "assistant", "content": full_response})
-    
-    # Footer informativo
-    st.markdown("---")
-    st.info("""
-    **🚀 NOTA IMPORTANTE:** Esta versión fue optimizada para evitar errores de memoria/instalación en el Plan Gratuito de Streamlit Cloud. Se eliminó la IA pesada (`torch`, `faiss`) y se utiliza la recuperación de texto pura, manteniendo el filtro por materia y la simulación de citación.
-    """)
+                
+                # Agregar al historial
+                st.session_state.messages.append({"role": "assistant", "content": full_response})
+                
+            except Exception as e:
+                error_msg = f"❌ Error: {str(e)}"
+                st.error(error_msg)
+                st.session_state.messages.append({"role": "assistant", "content": error_msg})
 
-# =========================================
-# EJECUCIÓN PRINCIPAL
-# =========================================
-if __name__ == "__main__":
-    main()
+# Footer
+st.markdown("---")
+st.success("🚀 **Asistente funcionando con Groq API** - Modelos Llama 3.3 70B - Ultra rápido")
