@@ -49,7 +49,7 @@ st.set_page_config(
 # INICIALIZAR GROQ
 # =========================================
 try:
-    client = Groq(api_key=st.secrets["GROQ_API_KEY"])
+    client = Groq(api_key=st.secrets["groq_api_key"])
 except Exception as e:
     st.error(f"❌ Error configurando Groq: {str(e)}")
     st.info("🔑 Configura GROQ_API_KEY en los secrets de Streamlit Cloud")
