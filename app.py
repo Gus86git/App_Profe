@@ -1,456 +1,249 @@
-import streamlit as st
+# app.py
+
 import os
-import time
-import random
-import numpy as np
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 import re
+import streamlit as st
+from langchain.text_splitters import RecursiveCharacterTextSplitter
+from langchain.document_loaders import DirectoryLoader, TextLoader
+from langchain_chroma import Chroma
+from langchain_google_genai import GoogleGenAIEmbeddings, ChatGoogleGenerativeAI
+from langchain.chains import RetrievalQA
 
-# =========================================
-# CONFIGURACIÓN DE PROFESORES
-# =========================================
-PROFESORES = {
-    "estadistica": {
-        "nombre": "Profesor Ferrarre",
-        "emoji": "📊",
-        "estilo": "Práctico y numérico",
-        "personalidad": "Eres directo, técnico y motivador. Enfócate en ejercicios prácticos y procesos paso a paso.",
-        "consejos": [
-            "Practica TODOS los ejercicios de las guías",
-            "Enfócate en entender el proceso, no solo el resultado",
-            "Los parciales suelen ser similares a los ejercicios de clase",
-            "No te saltes pasos en los desarrollos",
-            "Revisa bien las unidades de medida y decimales"
-        ]
-    },
-    "desarrollo_ia": {
-        "nombre": "Especialista IA", 
-        "emoji": "🤖",
-        "estilo": "Técnico y práctico",
-        "personalidad": "Eres preciso, moderno y práctico. Explica conceptos técnicos de manera clara.",
-        "consejos": [
-            "Empieza con los fundamentos antes de frameworks",
-            "Practica con proyectos pequeños primero",
-            "Documenta bien tu código",
-            "Revisa los algoritmos base antes de implementaciones complejas",
-            "Testea cada componente por separado"
-        ]
-    },
-    "campo_laboral": {
-        "nombre": "Profesora Acri",
-        "emoji": "💼", 
-        "estilo": "Exigente y profesional",
-        "personalidad": "Eres profesional, directa y orientada a resultados. Sé exigente pero constructiva.",
-        "consejos": [
-            "Sé impecable en presentaciones y entregas",
-            "Investiga la empresa antes de entrevistas",
-            "Prepara preguntas inteligentes para los reclutadores",
-            "Tu CV debe ser claro y sin errores",
-            "Practica tu pitch personal múltiples veces"
-        ]
-    },
-    "comunicacion": {
-        "nombre": "Especialista Comunicación",
-        "emoji": "🎯",
-        "estilo": "Claro y estructurado", 
-        "personalidad": "Eres amable, organizado y ejemplificador. Enseña con ejemplos concretos.",
-        "consejos": [
-            "Estructura tu mensaje antes de hablar",
-            "Practica la escucha activa",
-            "Adapta tu lenguaje al público",
-            "Usa ejemplos concretos en tus explicaciones",
-            "Maneja bien los tiempos en presentaciones"
-        ]
-    }
-}
+# --- Constantes de Configuración ---
+KNOWLEDGE_PATH = "conocimiento/"
+CHROMA_PERSIST_DIR = "chroma_db"
+LLM_MODEL = "gemini-2.5-flash"
+EMBEDDING_MODEL = "models/text-embedding-004"
 
-# =========================================
-# CONFIGURACIÓN STREAMLIT
-# =========================================
-st.set_page_config(
-    page_title="Asistente 4 Materias + IA Avanzada",
-    page_icon="🎓",
-    layout="wide"
-)
+def get_api_key():
+    """Obtiene la clave API de forma segura a través de st.secrets."""
+    try:
+        return st.secrets
+    except KeyError:
+        st.error("Error: La clave GOOGLE_API_KEY no está configurada en st.secrets.")
+        st.stop()
 
-# =========================================
-# SISTEMA DE IA CON MODELOS LIGEROS
-# =========================================
-class SistemaIA:
-    def __init__(self):
-        self.modelo_ia = None
-        self.tokenizer = None
+def get_subjects():
+    """Detecta dinámicamente las materias (subdirectorios) disponibles."""
+    subjects =
+    if os.path.exists(KNOWLEDGE_PATH):
+        # Listar subdirectorios en 'conocimiento/'
+        for item in os.listdir(KNOWLEDGE_PATH):
+            item_path = os.path.join(KNOWLEDGE_PATH, item)
+            if os.path.isdir(item_path):
+                # Formato: 'estadistica' -> 'Estadistica'
+                subjects.append(item.replace('_', ' ').title())
+    return sorted(subjects)
+
+def extract_subject_metadata(path: str) -> dict:
+    """Función crítica para extraer el metadato 'subject' (materia) 
+    del path para permitir el filtrado dinámico en ChromaDB."""
     
-    def cargar_modelo_ligero(self):
-        """Cargar modelo de IA ligero y compatible"""
-        try:
-            from transformers import pipeline
-            
-            # Usar un modelo más ligero y rápido
-            self.modelo_ia = pipeline(
-                "text-generation",
-                model="microsoft/DialoGPT-small",  # Modelo pequeño y rápido
-                max_length=400,
-                temperature=0.7,
-                do_sample=True
+    # Busca el nombre del subdirectorio inmediatamente después de 'conocimiento/'
+    match = re.search(r"conocimiento/([^/]+)/", path)
+    if match:
+        # El metadato debe coincidir con el nombre usado en el checkbox
+        subject = match.group(1).replace('_', ' ').title()
+        return {"source": path, "subject": subject}
+    return {"source": path, "subject": "General"}
+
+@st.cache_resource(show_spinner=False)
+def get_vector_store(api_key):
+    """Inicializa o carga la base de datos vectorial persistida y cacheada."""
+    
+    embeddings = GoogleGenAIEmbeddings(model=EMBEDDING_MODEL, api_key=api_key)
+
+    if os.path.exists(CHROMA_PERSIST_DIR) and os.listdir(CHROMA_PERSIST_DIR):
+        with st.spinner("Cargando base de conocimiento persistida..."):
+            # Carga rápida: Carga el índice desde el disco (evita re-embedding)
+            vector_store = Chroma(
+                persist_directory=CHROMA_PERSIST_DIR, 
+                embedding_function=embeddings
             )
-            return True
-        except Exception as e:
-            st.warning(f"⚠️ Modelo IA no disponible: {str(e)}")
-            return False
-    
-    def generar_respuesta_ia(self, prompt, max_longitud=350):
-        """Generar respuesta usando IA"""
-        try:
-            if not self.modelo_ia:
-                return None
-                
-            respuesta = self.modelo_ia(
-                prompt,
-                max_new_tokens=max_longitud,
-                pad_token_id=self.modelo_ia.tokenizer.eos_token_id
-            )
-            
-            texto_generado = respuesta[0]['generated_text']
-            # Limpiar y formatear la respuesta
-            texto_generado = texto_generado.replace(prompt, "").strip()
-            return texto_generado
-            
-        except Exception as e:
-            st.error(f"❌ Error generando respuesta IA: {str(e)}")
-            return None
-
-# =========================================
-# SISTEMA DE BÚSQUEDA SEMÁNTICA MEJORADO
-# =========================================
-class SistemaBusqueda:
-    def __init__(self):
-        self.documentos = []
-        self.nombres_docs = []
-        self.vectorizer = None
-        self.matriz_tfidf = None
-    
-    def cargar_y_procesar_conocimiento(self):
-        """Cargar y procesar todo el conocimiento para búsqueda semántica"""
-        try:
-            base_path = "conocimiento"
-            if not os.path.exists(base_path):
-                return False
-            
-            self.documentos = []
-            self.nombres_docs = []
-            
-            for materia in os.listdir(base_path):
-                materia_path = os.path.join(base_path, materia)
-                if os.path.isdir(materia_path):
-                    for archivo in os.listdir(materia_path):
-                        if archivo.endswith('.txt'):
-                            archivo_path = os.path.join(materia_path, archivo)
-                            try:
-                                with open(archivo_path, 'r', encoding='utf-8') as f:
-                                    contenido = f.read()
-                                    parrafos = self._dividir_en_parrafos(contenido)
-                                    for i, parrafo in enumerate(parrafos):
-                                        if len(parrafo.strip()) > 50:
-                                            self.documentos.append(parrafo)
-                                            self.nombres_docs.append(f"{materia}/{archivo} - Párrafo {i+1}")
-                            except Exception:
-                                continue
-            
-            if not self.documentos:
-                return False
-            
-            self.vectorizer = TfidfVectorizer(
-                stop_words=['el', 'la', 'los', 'las', 'de', 'en', 'y', 'que', 'se', 'no'],
-                max_features=1000,
-                ngram_range=(1, 2)
-            )
-            
-            self.matriz_tfidf = self.vectorizer.fit_transform(self.documentos)
-            return True
-            
-        except Exception as e:
-            st.error(f"❌ Error procesando conocimiento: {str(e)}")
-            return False
-    
-    def _dividir_en_parrafos(self, texto):
-        """Dividir texto en párrafos significativos"""
-        parrafos = re.split(r'\n\s*\n|\.\s+[A-Z]', texto)
-        return [p.strip() for p in parrafos if p.strip()]
-    
-    def buscar_similaridad(self, consulta, top_n=3):
-        """Buscar los documentos más similares a la consulta"""
-        if not self.documentos or self.vectorizer is None:
-            return []
-        
-        try:
-            consulta_tfidf = self.vectorizer.transform([consulta])
-            similitudes = cosine_similarity(consulta_tfidf, self.matriz_tfidf).flatten()
-            indices_similares = similitudes.argsort()[-top_n:][::-1]
-            
-            resultados = []
-            for idx in indices_similares:
-                if similitudes[idx] > 0.1:
-                    resultados.append({
-                        'contenido': self.documentos[idx],
-                        'fuente': self.nombres_docs[idx],
-                        'similitud': similitudes[idx]
-                    })
-            
-            return resultados
-            
-        except Exception as e:
-            return []
-
-# =========================================
-# GENERACIÓN DE RESPUESTAS HÍBRIDA (IA + BÚSQUEDA)
-# =========================================
-def generar_respuesta_avanzada(pregunta, materia, sistema_busqueda, sistema_ia):
-    """Generar respuesta combinando IA y búsqueda semántica"""
-    profesor = PROFESORES[materia]
-    
-    # Buscar contenido relevante
-    resultados = sistema_busqueda.buscar_similaridad(pregunta)
-    resultados_materia = [r for r in resultados if materia in r['fuente']]
-    if not resultados_materia:
-        resultados_materia = resultados
-    
-    # Construir contexto para IA
-    contexto_ia = ""
-    if resultados_materia:
-        contexto_ia = "\n".join([
-            f"Fuente: {r['fuente']}\nContenido: {r['contenido'][:300]}..."
-            for r in resultados_materia[:2]
-        ])
-    
-    # Crear prompt para IA
-    prompt_ia = f"""
-    Eres {profesor['nombre']}, un profesor especializado en {materia.replace('_', ' ')}.
-    {profesor['personalidad']}
-    
-    CONTEXTO DEL MATERIAL:
-    {contexto_ia}
-    
-    PREGUNTA DEL ESTUDIANTE:
-    {pregunta}
-    
-    Responde como lo haría este profesor, usando el contexto proporcionado y tu expertise.
-    Sé práctico, útil y mantén tu personalidad característica.
-    Responde en español.
-    
-    RESPUESTA:
-    """
-    
-    # Intentar generar con IA
-    respuesta_ia = None
-    if sistema_ia and sistema_ia.modelo_ia:
-        respuesta_ia = sistema_ia.generar_respuesta_ia(prompt_ia)
-    
-    # Construir respuesta final
-    if respuesta_ia:
-        respuesta_final = f"""
-        {profesor['emoji']} **{profesor['nombre']} responde:**
-        
-        {respuesta_ia}
-        """
+            return vector_store
     else:
-        # Fallback a respuesta semántica mejorada
-        respuesta_final = generar_respuesta_semantica(pregunta, materia, resultados_materia, profesor)
-    
-    # Añadir referencias si hay resultados relevantes
-    if resultados_materia:
-        respuesta_final += f"\n\n**📚 Fuentes consultadas:**"
-        for i, resultado in enumerate(resultados_materia[:2], 1):
-            similitud_porcentaje = resultado['similitud'] * 100
-            respuesta_final += f"\n• **{resultado['fuente']}** (relevancia: {similitud_porcentaje:.1f}%)"
-    
-    return respuesta_final
+        # Ingestión completa: Se ejecuta solo en el primer uso (o si se borra chroma_db)
+        with st.spinner("Indexando documentos por primera vez (puede tardar)..."):
+            
+            # Carga de documentos con mapeo de metadatos custom
+            loader = DirectoryLoader(
+                KNOWLEDGE_PATH,
+                glob="**/*.txt", # Soporte para todos los TXT
+                loader_cls=TextLoader,
+                loader_kwargs={'autodetect_encoding': True},
+                silent_errors=True
+            )
+            documents = loader.load()
 
-def generar_respuesta_semantica(pregunta, materia, resultados, profesor):
-    """Generar respuesta usando solo búsqueda semántica"""
-    respuesta = f"""
-    {profesor['emoji']} **{profesor['nombre']} responde:**
-    
-    **Sobre tu pregunta:** "{pregunta}"
-    """
-    
-    if resultados:
-        respuesta += f"\n\n**📚 Basándome en el material, te recomiendo:**\n\n"
-        for i, resultado in enumerate(resultados[:2], 1):
-            respuesta += f"**{i}. {resultado['contenido'][:200]}...**\n"
-            respuesta += f"   *Fuente: {resultado['fuente']}*\n\n"
-    else:
-        respuesta += f"\n\n**💡 {random.choice(profesor['consejos'])}**"
-    
-    respuesta += f"\n\n**🎯 Recuerda mi estilo:** {profesor['estilo']}"
-    respuesta += f"\n\n**🌟 Consejo práctico:** {random.choice(profesor['consejos'])}"
-    
-    return respuesta
+            # Aplicar la función de extracción de metadatos
+            for doc in documents:
+                new_metadata = extract_subject_metadata(doc.metadata.get('source', ''))
+                doc.metadata.update(new_metadata)
 
-# =========================================
-# INTERFAZ PRINCIPAL MEJORADA
-# =========================================
+            # Chunking (división en fragmentos)
+            text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
+            texts = text_splitter.split_documents(documents)
+
+            # Creación y persistencia
+            vector_store = Chroma.from_documents(
+                documents=texts,
+                embedding=embeddings,
+                persist_directory=CHROMA_PERSIST_DIR
+            )
+            # Guarda en disco para futuras ejecuciones (CRÍTICO para Streamlit Cloud)
+            vector_store.persist() 
+            return vector_store
+
+def create_metadata_filter(active_subjects: list) -> dict:
+    """Crea el filtro de metadatos 'where' para ChromaDB."""
+    if not active_subjects:
+        return None
+    
+    # Crea una lista de cláusulas OR/IN para los subjects seleccionados
+    filter_clauses = [{"subject": {"$eq": sub}} for sub in active_subjects]
+    return {"$or": filter_clauses}
+
+
+def get_rag_chain(vector_store, api_key, active_subjects: list):
+    """Construye la cadena RAG con el retriever filtrado."""
+    
+    llm = ChatGoogleGenerativeAI(
+        model=LLM_MODEL,
+        api_key=api_key,
+        temperature=0.1,
+        streaming=False # Simplificamos a no-streaming para usar RetrievalQA
+    )
+
+    metadata_filter = create_metadata_filter(active_subjects)
+    
+    # Inicialización del retriever con el filtro dinámico
+    retriever = vector_store.as_retriever(
+        search_type="similarity",
+        search_kwargs={"k": 5, "filter": metadata_filter}
+    )
+
+    # RetrievalQA: obtiene la respuesta y los documentos fuente (citaciones)
+    qa_chain = RetrievalQA.from_chain_type(
+        llm=llm,
+        chain_type="stuff",
+        retriever=retriever,
+        return_source_documents=True
+    )
+    return qa_chain
+
+def sidebar_config(subjects):
+    """Configura la barra lateral para la selección de fuentes estilo NotebookLM."""
+    st.sidebar.title("📚 Fuentes de Conocimiento")
+    st.sidebar.markdown("Selecciona las materias que el chatbot debe usar para responder.")
+
+    if 'active_subjects' not in st.session_state:
+        # Por defecto, todas las materias están activas
+        st.session_state['active_subjects'] = subjects
+
+    active_subjects_update =
+    
+    st.sidebar.subheader("Materias Disponibles")
+    for subject in sorted(subjects):
+        is_active = st.sidebar.checkbox(
+            subject, 
+            value=(subject in st.session_state['active_subjects']),
+            key=f"chk_{subject}"
+        )
+        if is_active:
+            active_subjects_update.append(subject)
+
+    st.session_state['active_subjects'] = active_subjects_update
+
+    # Configuración de estilo del LLM
+    st.sidebar.subheader("Estilo de Conversación")
+    style = st.sidebar.selectbox(
+        "Elige un rol para el tutor:",
+       ,
+        index=0
+    )
+    st.session_state['llm_style'] = style
+    
+    return st.session_state['active_subjects']
+
 def main():
-    st.title("🎓 Asistente 4 Materias + IA Avanzada")
-    st.markdown("### Ahora con generación inteligente de respuestas")
+    st.set_page_config(page_title="Tutor RAG (Estilo NotebookLM)", layout="wide")
+    st.title("👨‍🏫 Tutor Temático RAG: Aprendizaje Adaptativo")
+
+    # 1. Cargar secretos y verificar API Key
+    api_key = get_api_key()
+
+    # 2. Obtener la lista de materias disponibles
+    subjects = get_subjects()
+    if not subjects:
+         st.error("No se encontraron subdirectorios de materias en 'conocimiento/'.")
+         st.stop()
+
+    # 3. Inicializar Vector Store (con caché)
+    vector_store = get_vector_store(api_key)
+
+    # 4. Configurar barra lateral y obtener materias activas
+    active_subjects = sidebar_config(subjects)
     
-    # Inicializar sistemas
-    if "sistema_busqueda" not in st.session_state:
-        st.session_state.sistema_busqueda = SistemaBusqueda()
-    
-    if "sistema_ia" not in st.session_state:
-        st.session_state.sistema_ia = SistemaIA()
-    
-    # Cargar sistemas
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        with st.spinner("🧠 Procesando conocimiento..."):
-            if st.session_state.sistema_busqueda.cargar_y_procesar_conocimiento():
-                st.success(f"✅ Búsqueda semántica - {len(st.session_state.sistema_busqueda.documentos)} párrafos")
-    
-    with col2:
-        with st.spinner("🤖 Cargando IA..."):
-            if st.session_state.sistema_ia.cargar_modelo_ligero():
-                st.success("✅ Modelo IA cargado")
-            else:
-                st.info("🔧 IA no disponible - usando modo básico")
-    
-    # Sidebar mejorado
-    with st.sidebar:
-        st.header("📚 Selecciona Materia")
-        
-        selected_materia = st.selectbox(
-            "Elige tu materia:",
-            list(PROFESORES.keys()),
-            format_func=lambda x: f"{PROFESORES[x]['emoji']} {PROFESORES[x]['nombre']}"
-        )
-        
-        profesor = PROFESORES[selected_materia]
-        st.subheader(f"{profesor['emoji']} {profesor['nombre']}")
-        st.write(f"**Estilo:** {profesor['estilo']}")
-        
-        # Selector de modo de respuesta
-        st.markdown("---")
-        st.subheader("⚡ Modo de Respuesta")
-        modo_respuesta = st.radio(
-            "Selecciona el modo:",
-            ["Automático", "Solo Búsqueda", "Solo IA"],
-            index=0,
-            help="Automático: Combina IA y búsqueda. Solo Búsqueda: Más rápido. Solo IA: Más creativo."
-        )
-        
-        st.markdown("---")
-        st.markdown("**Consejos clave:**")
-        for consejo in profesor['consejos'][:3]:
-            st.write(f"• {consejo}")
-        
-        # Estadísticas del sistema
-        st.markdown("---")
-        st.subheader("🔍 Estado del Sistema")
-        
-        if st.session_state.sistema_busqueda.documentos:
-            st.success(f"📊 {len(st.session_state.sistema_busqueda.documentos)} párrafos")
-        else:
-            st.warning("📝 Sin documentos")
-        
-        if st.session_state.sistema_ia.modelo_ia:
-            st.success("🤖 IA disponible")
-        else:
-            st.warning("🤖 IA no disponible")
-        
-        st.markdown("---")
-        
-        if st.button("🔄 Reiniciar Sistemas", use_container_width=True):
-            st.session_state.sistema_busqueda = SistemaBusqueda()
-            st.session_state.sistema_ia = SistemaIA()
-            st.rerun()
-        
-        if st.button("🧹 Limpiar Chat", use_container_width=True):
-            st.session_state.messages = []
-            st.rerun()
-    
-    # Inicializar chat
+    if not active_subjects:
+        st.sidebar.info("⚠️ No hay materias seleccionadas.")
+    else:
+        st.sidebar.success(f"Fuentes activas: {len(active_subjects)}/{len(subjects)}")
+
+    # 5. Inicializar historial de chat
     if "messages" not in st.session_state:
-        st.session_state.messages = [
-            {"role": "assistant", "content": f"¡Hola! Soy {PROFESORES[selected_materia]['nombre']} {PROFESORES[selected_materia]['emoji']}. Ahora tengo capacidades de IA avanzada combinadas con búsqueda semántica. ¿En qué puedo ayudarte?"}
-        ]
-    
-    # Mostrar historial de chat
+        st.session_state["messages"] =
+
+    # 6. Mostrar historial de chat
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
-    
-    # Input del usuario
-    if prompt := st.chat_input(f"Pregunta sobre {selected_materia.replace('_', ' ')}..."):
+
+    # 7. Procesar entrada del usuario
+    if prompt := st.chat_input("Pregunta sobre las materias seleccionadas..."):
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
             st.markdown(prompt)
-        
-        # Generar respuesta según el modo seleccionado
+
         with st.chat_message("assistant"):
-            with st.spinner(f"💭 {PROFESORES[selected_materia]['nombre']} piensa..."):
-                if modo_respuesta == "Solo Búsqueda":
-                    respuesta = generar_respuesta_semantica(
-                        prompt, 
-                        selected_materia, 
-                        st.session_state.sistema_busqueda.buscar_similaridad(prompt),
-                        PROFESORES[selected_materia]
-                    )
-                elif modo_respuesta == "Solo IA" and st.session_state.sistema_ia.modelo_ia:
-                    respuesta = st.session_state.sistema_ia.generar_respuesta_ia(
-                        f"Responde como {PROFESORES[selected_materia]['nombre']} a: {prompt}"
-                    ) or "No pude generar una respuesta con IA en este momento."
-                else:
-                    respuesta = generar_respuesta_avanzada(
-                        prompt, 
-                        selected_materia, 
-                        st.session_state.sistema_busqueda,
-                        st.session_state.sistema_ia
-                    )
+            if not active_subjects:
+                 response_content = "Necesitas seleccionar fuentes activas en el panel lateral para que el tutor pueda responder."
+                 st.markdown(response_content)
+                 st.session_state.messages.append({"role": "assistant", "content": response_content})
+                 return
+
+            # 7.1 Construir el RAG Chain dinámico con el filtro
+            rag_chain = get_rag_chain(vector_store, api_key, active_subjects)
+
+            # 7.2 Insertar prompt de estilo para contextualización
+            system_prompt = f"Tu rol es el de un {st.session_state['llm_style']}. Utiliza únicamente la información proporcionada en el contexto para responder la siguiente pregunta, sé detallado y útil:"
+            full_prompt = f"{system_prompt}\n\nPregunta: {prompt}"
+
+            # 7.3 Ejecutar la cadena RAG
+            with st.spinner("Buscando y generando respuesta..."):
+                response = rag_chain.invoke({"query": full_prompt})
+            
+            full_response = response['result']
+            
+            # 7.4 Post-procesamiento para CITACIONES
+            citations =
+            if response.get("source_documents"):
+                citations.append("\n\n---\n\n**Fuentes Citadas (Estilo NotebookLM):**")
                 
-                # Efecto de escritura
-                message_placeholder = st.empty()
-                full_response = ""
-                
-                for chunk in respuesta.split():
-                    full_response += chunk + " "
-                    time.sleep(0.02)
-                    message_placeholder.markdown(full_response + "▌")
-                
-                message_placeholder.markdown(full_response)
-        
-        st.session_state.messages.append({"role": "assistant", "content": full_response})
-    
-    # Footer informativo
-    st.markdown("---")
-    
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.info("""
-        **🤖 IA Avanzada**
-        - Generación inteligente de respuestas
-        - Personalidades de profesores
-        - Contexto semántico
-        """)
-    
-    with col2:
-        st.success("""
-        **🔍 Búsqueda Semántica**
-        - TF-IDF + Cosine Similarity
-        - 1000+ términos especializados
-        - Resultados por relevancia
-        """)
-    
-    with col3:
-        st.warning("""
-        **🎯 Próximas Mejoras**
-        - Ejercicios interactivos
-        - Evaluaciones automáticas
-        - Análisis de progreso
-        """)
+                # Procesar cada documento recuperado
+                for i, doc in enumerate(response["source_documents"]):
+                    source_path = doc.metadata.get("source", "Fuente Desconocida")
+                    subject_name = doc.metadata.get("subject", "General")
+                    file_name = os.path.basename(source_path)
+                    
+                    citation_text = f"**[{i+1}]** Materia: *{subject_name}*. Archivo: `{file_name}`."
+                    citations.append(citation_text)
+                    
+            # 7.5 Mostrar la respuesta completa (texto + citas)
+            final_content = full_response + "\n".join(citations)
+            st.markdown(final_content)
+            
+            # 8. Actualizar historial de chat
+            st.session_state.messages.append({"role": "assistant", "content": final_content})
 
 if __name__ == "__main__":
     main()
