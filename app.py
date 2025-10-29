@@ -7,32 +7,36 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 
 # =========================================
-# CONFIGURACIÓN DE PROFESORES
+# CONFIGURACIÓN DE MATERIAS Y PROFESORES IFTS33
 # =========================================
 PROFESORES = {
     "estadistica": {
-        "nombre": "Profesor Ferrarre",
+        "nombre_materia": "Estadística y Probabilidad",
+        "nombre_profesor": "Profesor Ferrarre", 
         "emoji": "📊",
         "estilo": "Práctico y numérico",
-        "personalidad": "Eres práctico, directo y te enfocas en ejercicios numéricos. Usa ejemplos concretos."
+        "personalidad": "Eres práctico, directo y te enfocas en ejercicios numéricos. Usa ejemplos concretos de probabilidad y estadística."
     },
     "desarrollo_ia": {
-        "nombre": "Especialista IA", 
-        "emoji": "🤖",
+        "nombre_materia": "Desarrollo de sistemas de IA",
+        "nombre_profesor": "Profesora Pose",
+        "emoji": "🤖", 
         "estilo": "Técnico y práctico",
-        "personalidad": "Eres técnico pero accesible. Enfócate en fundamentos y proyectos reales."
+        "personalidad": "Eres técnica pero accesible. Enfócate en fundamentos de IA y desarrollo de sistemas inteligentes."
     },
     "campo_laboral": {
-        "nombre": "Profesora Acri",
-        "emoji": "💼", 
+        "nombre_materia": "Aproximación al campo laboral", 
+        "nombre_profesor": "Profesora Acri",
+        "emoji": "💼",
         "estilo": "Exigente y profesional",
-        "personalidad": "Eres exigente pero constructiva. Enfócate en profesionalismo y preparación."
+        "personalidad": "Eres exigente pero constructiva. Enfócate en profesionalismo y preparación para el mundo laboral."
     },
     "comunicacion": {
-        "nombre": "Especialista Comunicación",
+        "nombre_materia": "Comunicación",
+        "nombre_profesor": "Profesora Rodríguez", 
         "emoji": "🎯",
         "estilo": "Claro y estructurado",
-        "personalidad": "Eres claro y estructurado. Usa ejemplos y técnicas prácticas."
+        "personalidad": "Eres clara y estructurada. Usa ejemplos y técnicas prácticas de comunicación efectiva."
     }
 }
 
@@ -40,7 +44,7 @@ PROFESORES = {
 # CONFIGURACIÓN STREAMLIT
 # =========================================
 st.set_page_config(
-    page_title="Asistente 4 Materias - Híbrido Inteligente",
+    page_title="IA Assistant IFTS33",
     page_icon="🎓",
     layout="wide"
 )
@@ -173,18 +177,18 @@ class SistemaConocimientoHibrido:
             return []
 
 # =========================================
-# INTERFAZ PRINCIPAL HÍBRIDA
+# INTERFAZ PRINCIPAL PERSONALIZADA IFTS33
 # =========================================
 def main():
-    st.title("🎓 Asistente 4 Materias - Híbrido Inteligente")
-    st.markdown("### 🤖 **Prioriza tu conocimiento** + 🧠 **IA como complemento**")
+    st.title("🎓 IA Assistant IFTS33")
+    st.markdown("### 🤖 Prioriza tu conocimiento + 🧠 IA como complemento (Segundo Cuatrimestre)")
     
     # Inicializar sistema
     if "sistema_hibrido" not in st.session_state:
         st.session_state.sistema_hibrido = SistemaConocimientoHibrido()
     
     # Cargar conocimiento
-    with st.spinner("📚 Cargando tu conocimiento (párrafos largos)..."):
+    with st.spinner("📚 Cargando conocimiento..."):
         if not st.session_state.sistema_hibrido.conocimiento_cargado:
             cargado = st.session_state.sistema_hibrido.cargar_conocimiento_completo()
             if cargado:
@@ -192,18 +196,18 @@ def main():
             else:
                 st.error("❌ No se pudo cargar el conocimiento")
     
-    # Sidebar completo
+    # Sidebar personalizado
     with st.sidebar:
-        st.header("📚 Selecciona Materia")
+        st.header("📚 Materias IFTS33")
         
         selected_materia = st.selectbox(
             "Elige tu materia:",
             list(PROFESORES.keys()),
-            format_func=lambda x: f"{PROFESORES[x]['emoji']} {PROFESORES[x]['nombre']}"
+            format_func=lambda x: f"{PROFESORES[x]['emoji']} {PROFESORES[x]['nombre_materia']}"
         )
         
         profesor = PROFESORES[selected_materia]
-        st.subheader(f"{profesor['emoji']} {profesor['nombre']}")
+        st.subheader(f"{profesor['emoji']} {profesor['nombre_profesor']}")
         st.write(f"**Estilo:** {profesor['estilo']}")
         
         # Configuración avanzada
@@ -232,21 +236,15 @@ def main():
         
         # Estadísticas
         st.markdown("---")
-        st.subheader("📊 Tu Conocimiento")
+        st.subheader("📊 Conocimiento")
         
         if st.session_state.sistema_hibrido.conocimiento_cargado:
             total_parrafos = len(st.session_state.sistema_hibrido.documentos)
             parrafos_materia = sum(1 for m in st.session_state.sistema_hibrido.metadata 
                                  if m['materia'] == selected_materia)
             
-            # Calcular longitud promedio
-            longitudes = [m['longitud'] for m in st.session_state.sistema_hibrido.metadata 
-                         if m['materia'] == selected_materia]
-            long_promedio = sum(longitudes) // len(longitudes) if longitudes else 0
-            
             st.metric("Párrafos totales", total_parrafos)
             st.metric(f"Párrafos {selected_materia}", parrafos_materia)
-            st.metric("Longitud promedio", f"{long_promedio} chars")
         else:
             st.error("❌ Sin conocimiento cargado")
         
@@ -267,7 +265,7 @@ def main():
     if chat_key not in st.session_state:
         profesor = PROFESORES[selected_materia]
         st.session_state[chat_key] = [
-            {"role": "assistant", "content": f"¡Hola! Soy {profesor['nombre']} {profesor['emoji']}. Uso principalmente tu material y complemento con IA cuando es útil. ¿En qué puedo ayudarte?"}
+            {"role": "assistant", "content": f"¡Hola! Soy {profesor['nombre_profesor']} {profesor['emoji']}. Uso principalmente tu material y complemento con IA cuando es útil. ¿En qué puedo ayudarte con {profesor['nombre_materia'].lower()}?"}
         ]
     
     # Mostrar historial
@@ -276,13 +274,13 @@ def main():
             st.markdown(message["content"])
     
     # Procesar preguntas - SISTEMA HÍBRIDO
-    if prompt := st.chat_input(f"Pregunta sobre {selected_materia.replace('_', ' ')}..."):
+    if prompt := st.chat_input(f"Pregunta sobre {PROFESORES[selected_materia]['nombre_materia']}..."):
         st.session_state[chat_key].append({"role": "user", "content": prompt})
         with st.chat_message("user"):
             st.markdown(prompt)
         
         with st.chat_message("assistant"):
-            with st.spinner(f"🔍 {PROFESORES[selected_materia]['nombre']} analiza..."):
+            with st.spinner(f"🔍 {PROFESORES[selected_materia]['nombre_profesor']} analiza..."):
                 try:
                     profesor = PROFESORES[selected_materia]
                     
@@ -318,17 +316,17 @@ def main():
 def generar_respuesta_solo_local(prompt, materia, resultados, profesor):
     """Respuesta usando solo conocimiento local"""
     if resultados:
-        respuesta = f"**{profesor['emoji']} {profesor['nombre']} responde (basado en tu material):**\n\n"
+        respuesta = f"**{profesor['emoji']} {profesor['nombre_profesor']} responde (basado en tu material):**\n\n"
         
         for i, resultado in enumerate(resultados, 1):
             similitud_porcentaje = resultado['similitud'] * 100
             respuesta += f"**📚 De {resultado['metadata']['fuente']}** ({similitud_porcentaje:.1f}% relevante):\n"
             respuesta += f"{resultado['contenido']}\n\n"
         
-        respuesta += f"**🎯 {profesor['nombre']}:** Esta información viene directamente de tu material de estudio."
+        respuesta += f"**🎯 {profesor['nombre_profesor']}:** Esta información viene directamente de tu material de estudio."
         
     else:
-        respuesta = f"**{profesor['emoji']} {profesor['nombre']}:**\n\n"
+        respuesta = f"**{profesor['emoji']} {profesor['nombre_profesor']}:**\n\n"
         respuesta += "❌ **No encontré información específica sobre esto en tu material.**\n\n"
         respuesta += "💡 *Sugerencia:* Agrega contenido sobre este tema a la carpeta 'conocimiento' o prueba el modo híbrido."
     
@@ -338,13 +336,13 @@ def generar_respuesta_solo_ia(prompt, materia, profesor, modelo, temperatura):
     """Respuesta usando solo IA (como respaldo)"""
     try:
         prompt_ia = f"""
-        Eres {profesor['nombre']}, especialista en {materia.replace('_', ' ')}.
+        Eres {profesor['nombre_profesor']}, especialista en {profesor['nombre_materia']}.
         {profesor['personalidad']}
         
         Responde la siguiente pregunta manteniendo tu estilo característico.
         Sé práctico y útil para el estudiante.
         
-        PREGUNTA: {prompt}
+        PREGunta: {prompt}
         
         RESPUESTA:
         """
@@ -358,7 +356,7 @@ def generar_respuesta_solo_ia(prompt, materia, profesor, modelo, temperatura):
         
         respuesta_ia = response.choices[0].message.content
         
-        return f"**{profesor['emoji']} {profesor['nombre']} responde (usando conocimiento general):**\n\n{respuesta_ia}\n\n*💡 Nota: Esta respuesta viene del modelo IA, no de tu material específico.*"
+        return f"**{profesor['emoji']} {profesor['nombre_profesor']} responde (usando conocimiento general):**\n\n{respuesta_ia}\n\n*💡 Nota: Esta respuesta viene del modelo IA, no de tu material específico.*"
     
     except Exception as e:
         return f"❌ Error al generar respuesta con IA: {str(e)}"
@@ -367,7 +365,7 @@ def generar_respuesta_hibrida(prompt, materia, resultados, profesor, modelo, tem
     """Respuesta híbrida - Prioriza local, complementa con IA"""
     
     # Construir base con conocimiento local
-    respuesta = f"**{profesor['emoji']} {profesor['nombre']} responde:**\n\n"
+    respuesta = f"**{profesor['emoji']} {profesor['nombre_profesor']} responde:**\n\n"
     
     if resultados:
         # USAR CONOCIMIENTO LOCAL COMO BASE PRINCIPAL
@@ -381,7 +379,7 @@ def generar_respuesta_hibrida(prompt, materia, resultados, profesor, modelo, tem
         # COMPLEMENTAR CON IA PARA CONTEXTUALIZAR
         try:
             prompt_complemento = f"""
-            Eres {profesor['nombre']}. Acabo de proporcionar al estudiante información específica de su material sobre: "{prompt}"
+            Eres {profesor['nombre_profesor']}. Acabo de proporcionar al estudiante información específica de su material sobre: "{prompt}"
             
             INFORMACIÓN PROPORCIONADA (de su material):
             {''.join([r['contenido'][:500] + '...' for r in resultados])}
@@ -392,7 +390,7 @@ def generar_respuesta_hibrida(prompt, materia, resultados, profesor, modelo, tem
             3. Proporcionar consejos prácticos
             4. Mantenerte dentro del tema y NO introducir conceptos nuevos
             
-            Responde de manera natural como {profesor['nombre']} lo haría.
+            Responde de manera natural como {profesor['nombre_profesor']} lo haría.
             """
             
             response = client.chat.completions.create(
@@ -405,7 +403,7 @@ def generar_respuesta_hibrida(prompt, materia, resultados, profesor, modelo, tem
             complemento_ia = response.choices[0].message.content
             
             respuesta += f"**💡 Complemento contextual:**\n{complemento_ia}\n\n"
-            respuesta += f"**🎯 {profesor['nombre']}:** Recuerda revisar tu material completo para más detalles."
+            respuesta += f"**🎯 {profesor['nombre_profesor']}:** Recuerda revisar tu material completo para más detalles."
             
         except Exception as e:
             respuesta += f"*💡 He proporcionado la información de tu material. Revisa los archivos para más detalles.*"
@@ -416,7 +414,7 @@ def generar_respuesta_hibrida(prompt, materia, resultados, profesor, modelo, tem
         
         try:
             prompt_ia_cauteloso = f"""
-            Eres {profesor['nombre']}. Un estudiante te pregunta sobre: "{prompt}"
+            Eres {profesor['nombre_profesor']}. Un estudiante te pregunta sobre: "{prompt}"
             
             IMPORTANTE: No hay información específica en su material sobre esto.
             Responde de manera general pero ÚTIL, y:
@@ -425,7 +423,7 @@ def generar_respuesta_hibrida(prompt, materia, resultados, profesor, modelo, tem
             - No inventes información detallada o específica
             - Sé honesto sobre las limitaciones
             
-            Responde como {profesor['nombre']} lo haría.
+            Responde como {profesor['nombre_profesor']} lo haría.
             """
             
             response = client.chat.completions.create(
