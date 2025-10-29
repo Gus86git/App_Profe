@@ -3,5 +3,4 @@ streamlit>=1.34.0
 langchain>=0.2.0
 langchain-chroma
 langchain-text-splitters
-google-genai
-pypdf # Se incluye pypdf por si se añaden PDF en el futuro
+sentence-transformers
