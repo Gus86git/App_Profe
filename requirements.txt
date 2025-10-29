@@ -1,3 +1,7 @@
-streamlit==1.28.0
-scikit-learn==1.3.0
-numpy==1.24.0
+# requirements.txt
+streamlit>=1.34.0
+langchain>=0.2.0
+langchain-chroma
+langchain-text-splitters
+google-genai
+pypdf # Se incluye pypdf por si se añaden PDF en el futuro
