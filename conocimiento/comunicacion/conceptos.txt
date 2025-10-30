@@ -1,0 +1,263 @@
+Conceptos clave con definiciones precisas, ejemplos y relaciones entre temas)
+
+A
+Aguja Hipodérmica (Teoría de la)
+
+Definición : Modelo que postula que los medios masivos "inyectan" mensajes directamente en una audiencia pasiva y homogénea, generando efectos inmediatos.
+Ejemplo : Propaganda nazi en la radio para controlar masas.
+Relación : Pertenece al paradigma funcionalista ; Criticada por simplificar la recepción.
+Establecimiento de la agenda
+
+Definición : Teoría que sostiene que los medios no dicen qué pensar , sino sobre qué pensar , al priorizar ciertos temas en la agenda pública.
+Frase clave : "Los medios crean la realidad".
+Ejemplo : Si los medios destacan la inflación, la sociedad la percibe como el problema principal.
+Relación : Vinculado al paradigma funcionalista y al poder de los medios .
+B
+Barthes, Roland
+
+Definición : Semiólogo francés (1915-1980) que analizó la cultura como sistema de signos. Autor de La aventura semiológica .
+Aportes clave :
+Denotación vs. Connotación : SIGNIFICADO literal vs. asociaciones culturales.
+Mito : Ideologías ocultas en mensajes cotidianos (ej: publicidad).
+Ejemplo : Análisis de la portada de Paris Match : un soldado negro saludando la bandera francesa connota el imperialismo como "natural".
+do
+Canal
+
+Definición : Medio físico o técnico por el que se transmite un mensaje.
+Ejemplos : aire (voz), papel (texto), ondas (radio), internet (redes).
+Relación : En Shannon y Weaver , el canal puede tener "ruido" que distorsiona el mensaje.
+Código
+
+Definición : Sistema de signos y reglas compartido por emisor y receptor para codificar/decodificar mensajes.
+Tipos : Lingüístico (idiomas), no lingüístico (imágenes, sonidos).
+Ejemplo : El código de tránsito (semáforos) es universal.
+Relación : Sin código compartido, la comunicación falla.
+Codificación
+
+Definición : Proceso de transformar una idea en un mensaje usando un código.
+Ejemplo : Escribir "te amo" para expresar un sentimiento.
+Relación : Primer paso en el modelo lineal de Shannon .
+Comunicación
+
+Definición : Proceso social de intercambio de mensajes que implica producción de sentido e interacción.
+Dimensiones :
+Experiencia : Vínculo cotidiano (hablar con amigos).
+Trabajo : Actividad profesional (diseñar una campaña).
+Características : Mediatez, retroalimentación, irrepetibilidad.
+Relación : Objeto de estudio de todos los paradigmas .
+Connotación
+
+Definición : Significados subjetivos, culturales o emocionales asociados a un signo.
+Ejemplo : "Rosa" denota una flor, pero connota amor o feminidad.
+Relación : Barthes la vincula con ideologías dominantes.
+Contexto
+
+Definición : Situación (social, cultural, histórica) en la que ocurre la comunicación.
+Ejemplo : Un chiste puede ser ofensivo en un funeral pero gracioso en una fiesta.
+Relación : Clave en el paradigma crítico (Escuela de Frankfurt).
+D
+Decodificación
+
+Definición : Proceso de interpretar un mensaje usando un código.
+Ejemplo : Entender que un semáforo en verde significa "avanzar".
+Relación : En Shannon y Weaver , es el paso inverso a la codificación.
+Denotación
+
+Definición : Significado literal, objetivo y universal de un signo.
+Ejemplo : "Perro" denota un animal mamífero doméstico.
+Relación : Primer nivel de análisis en semiología (Barthes) .
+Diseño Sonoro
+
+Definición : Disciplina que combina sonidos, silencios, música y efectos para narrar y generar emociones.
+Orígenes : Cine clásico ( King Kong , 1933); consolidado en Apocalypse Now (1979).
+Etapas : Observar/analizar → Evaluar → Planificar → Ejecutar.
+Relación : Usa la función emotiva de Jakobson y se aplica en podcasts, cine, etc.
+mi
+Emisor
+
+Definición : Sujeto que inicia la comunicación, codifica y envía un mensaje.
+Ejemplos : Periodista, publicista, amigo.
+Relación : En modelos lineales ( Shannon ) es activo; en circulares ( Osgood-Schramm ) interactúa con el receptor.
+Escuela de Frankfurt (Teoría Crítica)
+
+Definición : Corriente (años 1930-1940) que critica a los medios como herramientas de dominación ideológica.
+Conceptos clave :
+Industria cultural : Estandarización de la cultura para masificar el consumo (ej: Hollywood).
+Manipulación : Medios reproducen el orden capitalista.
+Autores : Adorno, Horkheimer.
+Relación : Paradigma crítico ; opuesto al funcionalismo.
+Estructuralismo (Paradigma)
+
+Definición : Enfoque que estudia la comunicación como sistema de signos y significados.
+Base : Semiología de Saussure y Barthes .
+Conceptos clave : Denotación/connotación, mito, discurso social.
+Relación : Analiza cómo los medios construyen sentido mediante códigos culturales.
+F
+Retroalimentación
+
+Definición : Respuesta del receptor al mensaje, que permite ajustar la comunicación.
+Ejemplo : Asentimiento en una conversación, comentarios en redes.
+Relación : Esencial en modelos circulares ( Osgood-Schramm ); ausente en lineas.
+Funciones del Lenguaje (Jakobson)
+
+Definición : Seis funciones que describen cómo el lenguaje se orienta a distintos elementos de la comunicación.
+Tabla resumen :
+Función
+Elemento
+Propósito
+Ejemplo
+Referencial	Contexto	Informar objetivamente	"La Tierra es redonda".
+Emotiva	Emisor	Expresar sentimientos	"¡Estoy feliz!".
+Conativa	Receptor	Influir en el receptor	"¡Vota ya!".
+Fática	Canal	Contacto de mantenimiento	¿Mis ojos?
+Metalingüística	Código	Hablar sobre el lenguaje	¿Qué significa 'logo'?".
+Poética	Mensaje	Destacar la forma	"En el silencio se oye".
+
+Relación : Clave para analizar mensajes en diseño, publicidad o medios.
+Funcionalismo (Paradigma)
+
+Definición : Enfoque que estudia cómo los medios contribuyen al equilibrio social.
+Teorías asociadas : Aguja hipodérmica, agenda seting, usos y gratificaciones.
+Autores : Lasswell, Lazarsfeld.
+Relación : Uno de los tres grandes paradigmas (junto al crítico y estructuralista).
+GRAMO
+Géneros Audiovisuales
+
+Definición : Clasificaciones de productos audiovisuales basadas en reglas narrativas.
+Principales géneros :
+Didáctico : Educar (ej: documental científico).
+Narrativo : Contar historias (ej: ficción).
+Tutorial : Enseñar paso a paso (ej: vídeo de cocina).
+Entrevista : Exponer opiniones de expertos.
+Experimental : Innovar en lenguaje (ej: videoarte).
+Relación : Cada género usa funciones de Jakobson (ej: didáctico = referencial).
+I
+Industria Cultural
+
+Definición : Término de Adorno y Horkheimer para la producción masiva de cultura estandarizada (cine, radio, música).
+Crítica : Alienación, pérdida de creatividad, reproducción ideológica.
+Ejemplo : Películas de Hollywood con fórmulas repetitivas.
+Relación : Concepto central de la Escuela de Frankfurt .
+J
+Jakobson, Romano
+
+Definición : Lingüista ruso (1896-1982) que propuso las seis funciones del lenguaje .
+Aporte clave : Vinculó cada función con un elemento de la comunicación (emisor, receptor, mensaje, etc.).
+Relación : Su marco es esencial para analizar cualquier mensaje comunicativo.
+L
+Lenguaje audiovisual
+
+Definición : Sistema que integra códigos sonoros (música, voz) y visuales (imágenes) para generar significados complejos.
+Características :
+Diálogo entre lenguajes (audio + imagen).
+Producir mediante sentido convergencia.
+Ejemplo : Escena de película donde música triste refuerza la imagen de un personaje llorando.
+Relación : Usa funciones emotiva (sonido) y poética (imagen) de Jakobson.
+Lenguaje Sonoro
+
+Definición : Sistema basado en sonidos, silencios, música y efectos.
+Aplicaciones : Podcasts, radio, diseño sonoro en cine.
+Relación : Uno de los tres lenguajes (junto al visual y audiovisual).
+Lenguaje visual
+
+Definición : Sistema que utiliza imágenes, colores, formas y tipografía para transmitir mensajes.
+Ejemplos : Infografías, logotipos, presentaciones.
+Relación : En diseño gráfico, se traducen necesidades en mensajes claros ( matriz FETE ).
+METRO
+Mapa conceptual
+
+Definición : Herramienta visual que organiza conceptos y sus relaciones jerárquicas.
+Pasos para crearlo :
+Identificar tema central.
+Seleccionar conceptos clave.
+Organizar jerárquicamente (generales → específicos).
+Establecer relaciones con palabras de enlace.
+Revisar claridad y brevedad.
+Ejemplo : Mapa sobre "Comunicación" con ramas para "Funciones del lenguaje" y "Modelos".
+Relación : Ayuda a sintetizar información compleja (ej: vincular paradigmas).
+Matriz FETE
+
+Definición : Marco de análisis del diseño que evalúa cuatro dimensiones:
+Dimensión
+Enfoque
+Ejemplo
+Funcional	Utilidad y propósito	Vaso apilable (optimiza espacio).
+Expresiva	Estética y simbolismo	Logotipo de Apple (innovación).
+Tecnológica	Materiales y procesos	Impresión 3D.
+Económica	Costos y viabilidad	Producción masiva.
+
+Relación : Clave en diseño y comunicación para crear soluciones integrales.
+Mensaje
+
+Definición : Contenido transmitido en la comunicación, codificado por el emisor y decodificado por el receptor.
+Tipos : Verbal, no verbal, visual, sonoro, audiovisual.
+Relación : En Jakobson , es el centro de la función poética.
+Modelo de Shannon y Weaver
+
+Definición : Modelo lineal (1948) que describe la transmisión de información como proceso técnico.
+Elementos : Fuente → Emisor → Canal → Receptor → Destino (+ Ruido ).
+Objetivo : Medir eficacia en transmisión (ej: telecomunicaciones).
+Limitación : Ignora contexto y retroalimentación.
+Relación : Base del paradigma funcionalista .
+PAG
+Paradigma
+
+Definición : Marco teórico que orienta cómo se observa y estudia un fenómeno (en comunicación).
+Principales paradigmas :
+Funcionalista : Estudia efectos y funciones de los medios.
+Crítico (Frankfurt) : Analiza el poder y la ideología.
+Estructuralista (Barthes) : Examina significados y signos.
+Relación : Cada paradigma ofrece una perspectiva distinta para analizar la comunicación.
+R
+Receptor
+
+Definición : Sujeto que recibe e interpreta el mensaje.
+Evolución : En modelos lineales es pasivo; en usos y gratificaciones es activo (elige medios según necesidades).
+Relación : En Jakobson , es el centro de la función conativa.
+Ruido
+
+Definición : Interferencia que distorsiona el mensaje durante la transmisión.
+Tipos :
+Físico : Estática en una radio.
+Semántico : Malentendido por código compartido insuficiente.
+Ejemplo : Mala conexión en una videollamada.
+Relación : Elemento clave en Shannon y Weaver .
+S
+Semiología
+
+Definición : Disciplina que estudia los signos y su funcionamiento en la comunicación.
+Fundadores : Saussure (lingüística), Barthes (cultura).
+Conceptos clave *: Significante (forma), significado (concepto), denotación, connotación.
+Relación : Base del paradigma estructuralista .
+Signo
+
+Definición : Unidad mínima de comunicación que une un significante (forma perceptible) y un significado (concepto mental).
+Ejemplo : La palabra "árbol" (significante) evoca la idea de un árbol (significado).
+Relación : Objeto de estudio central en semiología .
+T
+Teoría de los Usos y Gratificaciones
+
+Definición : Enfoque que sostiene que la audiencia es activa y elige medios para satisfacer necesidades.
+Tipos de gratificaciones :
+Cognitivas : Buscar información (ej: leer noticias).
+Afectivas : Entretenimiento (ej: ver series).
+Personales : Identidad (ej: seguir influencers).
+Sociales : Interacción (ej: usar redes sociales).
+Relación : Pertenece al paradigma funcionalista ; critica la pasividad del receptor.
+Tres Lenguajes de la Comunicación
+
+Definición : Clasificación de sistemas comunicativos:
+Visual : Imágenes, gráficos, diseño.
+Sonoro : Sonidos, música, podcast.
+Audiovisual : Fusión de audio e imagen (cine, vídeo).
+Relación : Cada uno usa funciones de Jakobson (ej: visual = poética; sonoro = emotiva).
+U
+Usos y gratificaciones
+
+Ver "Teoría de los Usos y Gratificaciones" .
+Relaciones Clave entre Conceptos
+Barthes + Jakobson : La connotación usa funciones emotiva y poética para persuadir.
+Diseño sonoro + Usos y Gratificaciones : Un podcast satisface gratificaciones cognitivas (información) y afectivas (música).
+Modelos + Matriz FETE : El modelo de Shannon se vincula con la dimensión tecnológica (canales de transmisión).
+Paradigmas : El funcionalismo estudia efectos; el estructuralismo (Barthes) analiza significados; la Escuela de Frankfurt critica poder.
+Este glosario integra todos los temas con definiciones precisas, ejemplos y vínculos teóricos. ¡Es tu herramienta definitiva para dominar la comunicación! Si necesitas profundizar en algún concepto, avísame. 😊

@@ -1,0 +1,664 @@
+Tecnicatura Superior en Ciencia de Datos e Inteligencia Artificial
+
+PLANIFICACIÓN DE CLASES
+
+Desarrollo de Sistemas de Inteligencia Artificial
+Cantidad de clases en el cuatrimestre: 31
+Cantidad de clases presenciales:8
+Cantidad de clases virtuales:23
+Cantidad de feriados: 3
+Clase Fecha Unidad/es Contenidos Modalidad
+1 14/08/2025 Introducción Presencial
+Contenidos Objetivos de la unidad/módulo
+Presentación de la carrera
+Presentación de la materia
+Presentación del docente
+Pautas de evaluación
+Pautas de corrección
+Pautas de aprobación
+Que el alumno tenga en claro cual es el rol de la materia en el programa.
+Que el alumno tenga en claro cuales son las condiciones para aprobar la materia.
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+Presentación y exposición de pautas.
+Sondeo del bagaje de contenido que traen los alumnos para nivelar los conocimientos.
+Material propuesto por el docente. ppt, necesidad de contar con una computadora y un
+proyector para compartir el material con los alumnos.
+2 15/08/2025 Feriado Libre
+UNIDAD 1: FUNDAMENTOS DE LA INTELIGENCIA ARTIFICIAL
+Objetivo de la unidad: Comprender los conceptos fundamentales de la inteligencia artificial, su origen, clasificación y enfoques principales, identificando sus aplicaciones en la
+vida cotidiana y en diversas industrias, para sentar las bases teóricas que permitan el análisis y desarrollo de sistemas inteligentes
+3 21/08/2025 1 Introducción a IA y storytelling Virtual Sincrónico
+Página 2 | 18
+Contenidos Objetivos de la unidad/módulo
+Introducción a Industria 4.0 y 5.0 como contexto
+Línea de tiempo de la IA: evolución histórica con hitos clave
+IA débil vs IA fuerte: diferencias y ejemplos
+Dinámica grupal: análisis de un caso real de aplicación de IA en un sector
+Puesta en común .
+Storytelling aplicado
+Al finalizar la clase, los alumnos serán capaces de:
+Contextualizar la Inteligencia Artificial dentro de la Industria 4.0 y 5.0.
+Reconocer los principales hitos en la evolución histórica de la IA.
+Diferenciar entre IA débil (estrecha) e IA fuerte (general), identificando
+ejemplos concretos.
+Analizar de manera grupal un caso real de aplicación de IA en distintos sectores.
+Aplicar técnicas básicas de storytelling para comunicar de manera clara y
+persuasiva un caso de IA.
+Desarrollar habilidades de reflexión crítica sobre los impactos éticos y laborales
+de la IA.
+Expresar percepciones personales sobre la IA a través de una síntesis individual
+o mediante la presentación narrativa del caso trabajado.
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+Exposición breve de Industria 4.0
+Trabajo en grupos: cada grupo busca un ejemplo real de IoT, IoS, IoD o IoP y lo presenta
+Debate guiado sobre impacto en la vida cotidiana.
+Aplicación de storytelling
+Presentación multimedia preparada por el docente.
+4 22/08/2025 1 Tipos de IA Virtual Sincrónico
+Contenidos Objetivos de la unidad/módulo
+Fases de la IA
+Clasificación de la IA
+Taxonomía de la IA
+Clasificación por función
+Introducción al machine learning y deep learning
+Visión por computadora
+Al finalizar la clase, los alumnos serán capaces de:
+Comprender las diferentes formas de clasificación de la IA según su capacidad,
+función y taxonomía.
+Distinguir los enfoques principales de aprendizaje automático (machine
+learning) y aprendizaje profundo (deep learning).
+Página 3 | 18
+Reconocer las bases de la visión por computadora y sus aplicaciones prácticas
+en distintos sectores.
+Relacionar los conceptos teóricos con ejemplos reales de uso de IA en la vida
+cotidiana y en el ámbito productivo.
+.
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+Presentación del docente con ejemplos.
+Ejercicio grupal: cada grupo recibe un caso (ej. recomendación de Netflix, auto autónomo) y
+debe clasificar qué tipo de IA es y justificarlo.
+Puesta en común.
+Preguntas rápidas de repaso.
+Presentación multimedia preparada por el docente.
+5 28/08/2025 1 Introducción a Python Virtual Sincrónico
+Contenidos Objetivos de la unidad/módulo
+NLP y sus usos más comunes
+Sistemas expertos
+Sistemas de control
+Robótica
+Introducción a la programación
+Al finalizar la clase, los alumnos serán capaces de:
+Reconocer los usos comunes de NLP.
+Comprender qué es un sistema experto.
+Adquirir nociones iniciales de programación en Python.
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+Presentación teórica breve.
+Demostración en vivo en Colab :se muestra paso a paso cómo funciona un código simple en
+Python , ejemplo: un programa que procesa texto o realiza una operación matemática
+básica). Los alumnos observan y pueden hacer preguntas en el momento.
+Ejercicio individual en Colab (los alumnos modifican un código ya preparado
+Puesta en común con 2-3 alumnos mostrando sus resultados: 2 o 3 alumnos comparten su
+pantalla para mostrar cómo resolvieron la modificación. El docente comenta y corrige si es
+Presentación multimedia preparada por la docente.
+Notebook en Google Colab preparado previamente para la demostración y
+práctica.
+Página 4 | 18
+necesario, destacando las diferentes formas de llegar al resultado.
+6 29/08/2025 1 GitHub Virtual Sincrónico
+Contenidos Objetivos de la unidad/módulo
+Introducción a GitHub
+Configuración inicial conocer la
+Estructura de un repositorio
+Creación y edición de un archivo readme.md
+Subida de los archivos de un proyecto
+Uso de commits
+Importancia de la documentación de los proyectos que van realizando
+Al finalizar la clase, los alumnos serán capaces de:
+Reconocer la función y beneficios de GitHub como plataforma de control de versiones y
+colaboración.
+Comprender la importancia de la organización y disciplina en la documentación de
+proyectos.
+Aprender a crear y estructurar carpetas
+Familiarizarse con la creación de archivos readme
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+Demostración guiada: explicación inicial sobre qué es GitHub, cómo funciona y cómo se estructura un
+repositorio. El docente crea un repositorio en vivo, agrega un archivo y muestra la edición de un
+README.md.
+Ejercicio práctico: cada alumno crea su propia cuenta de GitHub (si no la tiene)
+Subida de archivos Debate general discusión final sobre la importancia de documentar los proyectos,
+con ejemplos de buenas y malas prácticas. Los alumnos aportan sus impresiones en chat o micrófono;
+el docente registra la participación activa.
+Presentación multimedia preparada por el docente.
+Cuenta de GitHub de cada alumno.
+Ejemplos de repositorios bien documentados para mostrar en clase.
+7 04/09/2025 1 Áreas de aplicación de la IA - Entorno real del desarrollo de IA Presencial
+Contenidos Objetivos de la unidad/módulo
+Roles dentro del mundo de los datos
+Que es un data warehouse
+Que es un data lake
+Que es un data fabric
+Que es un data mesh
+Al finalizar la clase, los alumnos serán capaces de:
+Reconocer y diferenciar los diferentes roles en el ecosistema de datos: ingeniero/a de
+datos. Analista de datos, científico de datos etc.
+Comprender las habilidades, responsabilidades y herramientas en cada rol
+Analizar como estos roles interactúan dentro de un flujo de trabajo en el mundo de los
+datos.
+Relacionar los perfiles profesionales con las etapas de un proyecto de datos
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+Página 5 | 18
+Presentación breve sobre roles en datos.
+Ejercicio grupal: cada grupo investiga un rol (data engineer, analista, científico) y arma un
+breve pitch explicando qué hace y qué herramientas usa.
+Discusión sobre cómo interactúan los roles en un proyecto.
+Presentación multimedia preparada por el docente.
+necesidad de contar con una computadora y un proyector para compartir el material con
+los alumnos
+8 05/09/2025 1 Análisis EDA y limpieza de Datos VIRTUAL
+Contenidos Objetivos de la unidad/módulo
+Introducción al Análisis Exploratorio de Datos (EDA) y limpieza de datos
+Revisión de la calidad y estructura del dataset
+Detección de valores faltantes, duplicados y atípicos
+Aplicación de estadísticas descriptivas básicas (media, mediana, desviación, frecuencia)
+Visualización simple de variables numéricas y categóricas (histogramas, diagramas de caja, gráficos de
+barras)
+Técnicas básicas de limpieza como eliminación o imputación de valores faltantes
+Corrección de datos inconsistentes y normalización de formatos
+Preparación de los datos para análisis posteriores
+Al finalizar la clase, los alumnos serán capaces de:
+Comprender la importancia del EDA y la limpieza de datos como pasos iniciales en todo
+proyecto de IA o ciencia de datos.
+Identificar problemas comunes en los datos (faltantes, duplicados, atípicos,
+inconsistencias).
+Aplicar técnicas básicas de estadística descriptiva y visualización para explorar un dataset.
+Realizar operaciones simples de limpieza de datos para mejorar la calidad y usabilidad del
+conjunto de datos.
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+Exposición inicial breve sobre qué es el EDA y por qué es importante en proyectos de IA
+Ejemplo guiado en vivo
+Presentación multimedia preparada por el docente.
+Google colab
+9 11/09 Feriado Libre
+UNIDAD 2: Sistemas Expertos
+Objetivo de la unidad: Al finalizar la unidad, el estudiante será capaz de describir las principales formas de representación del conocimiento en
+Inteligencia Artificial, explicar el funcionamiento y los componentes de un sistema experto, analizar procesos de inferencia lógica, y aplicar técnicas
+de encadenamiento y resolución de conflictos para resolver problemas mediante reglas.
+8 12/09/2025 2
+Sistemas expertos: definición y arquitectura general
+Virtual Sincrónico
+Página 6 | 18
+Contenidos Objetivos de la unidad/módulo
+Concepto de representación del conocimiento
+Ejemplos cotidianos y en inteligencia artificial
+Importancia para la toma de decisiones automatizada
+Visión general de un sistema experto
+Definición
+Relación entre representación del conocimiento y sistemas expertos
+Esquema básico de arquitectura
+Al finalizar la clase, los alumnos serán capaces de:
+Definir qué es un sistema experto y describir para qué se utiliza.
+Identificar los principales componentes de un sistema experto y su función.
+Comprender la relación entre representación del conocimiento y sistemas
+expertos.
+Reconocer ejemplos prácticos de aplicación de sistemas expertos en distintos
+contextos.
+.
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+Presentación con diapositivas
+Ejemplo simple practico: Los alumnos responden en Mentimeter si creen que el ejemplo corresponde a
+un sistema experto o no (cada alumno responde individualmente)
+PRATICIPACION: respuestas orales o en el chat
+Video explicativo
+Presentación multimedia y notebook en Google colab preparada por la docente
+Video explicativo
+Mentimeter
+9 18/09/2025 2 Sistemas basados en reglas: Estructura y funcionamiento Virtual Sincrónico
+Contenidos Objetivos de la unidad/módulo
+Definición de sistema basado en reglas.
+Concepto de sistema de producción.
+Estructura de una regla: condición (antecedente) y acción (consecuente).
+Tipos de reglas y su uso en la representación del conocimiento.
+Ventajas y limitaciones de los sistemas basados en reglas
+Al finalizar la clase, los alumnos serán capaces de:
+Definir qué es un sistema basado en reglas y explicar cómo se estructura.
+Reconocer el concepto de sistema de producción y su relación con la lógica “SI…
+ENTONCES…”.
+Identificar los elementos fundamentales de una regla (condición y acción).
+Analizar ejemplos prácticos de aplicación de reglas en distintos contextos.
+Evaluar ventajas y limitaciones de los sistemas basados en reglas.
+Página 7 | 18
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+Video explicativo
+Presentación en diapositivas
+Ejemplo práctico en Google colab
+Presentación multimedia y notebook en Google colab preparada por la docente
+Video explicativo
+10 19/09/2025 2 Base de conocimientos y motor de inferencia Virtual Sincrónico
+Contenidos Objetivos de la unidad/módulo
+Aplicación de reglas para llegar a conclusiones.
+Concepto y estructura de la base de conocimientos.
+Motor de inferencia: que es y cómo funciona.
+Relación entre base de conocimientos y motor de inferencia
+Al finalizar la clase, los alumnos serán capaces de:
+Explicar el rol de la base de conocimientos y del motor de inferencia en un
+sistema basado en reglas.
+Describir cómo el motor de inferencia procesa la información para generar
+conclusiones.
+Analizar la importancia de la organización del conocimiento para la eficiencia de
+los sistemas.
+Identificar herramientas y recursos que facilitan la implementación de bases de
+conocimientos y motores de inferencia.
+.
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+Exposición de los conceptos teóricos con apoyo visual.
+Ejemplo práctico guiado :Se presenta un ejemplo de aplicación de reglas en un sistema de inferencia
+Los alumnos siguen el ejemplo paso a paso en Google Colab.
+Discusión breve sobre cómo la organización del conocimiento afecta la eficiencia del sistema. Actividad
+Individual, los alumnos responden en chat o micrófono; el docente identifica quién participa
+activamente.
+Google Colab con el ejemplo práctico.
+Video explicativo del funcionamiento del motor de inferencia.
+Presentación multimedia preparada por el docente.
+11 25/09/2025 2
+Inferencia lógica y sistemas de resolución - Fundamentos de la resolución de
+problemas con IA - Técnicas de búsqueda Virtual Sincrónico
+Contenidos Objetivos de la unidad/módulo
+Página 8 | 18
+Que es inferir y como razona un sistema experto .
+Encadenamiento hacia adelante y hacia atrás.
+Resolución de problemas por lógica de producción.
+Estrategias de resolución y manejo de conflictos entre reglas.
+Concepto de eficiencia en sistemas lógicos.
+Fundamentos de la resolución de problemas con IA y técnicas de búsqueda
+Al finalizar la clase, los alumnos serán capaces de:
+Explicar cómo los sistemas expertos realizan inferencias lógicas para resolver
+problemas.
+Diferenciar entre encadenamiento hacia adelante y hacia atrás en la inferencia.
+Aplicar estrategias básicas de resolución de problemas utilizando reglas.
+Analizar la importancia de la eficiencia en los procesos de inferencia lógica.
+Identificar técnicas de búsqueda aplicables a la resolución de problemas en IA.
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+Exposición teórica guiada
+Ejemplo práctico guiado :Se muestra un ejemplo de resolución de problemas con encadenamiento
+hacia adelante y hacia atrás.
+Cada alumno ejecuta el ejemplo individualmente; el docente atiende dudas en tiempo real.
+Google colab.
+Presentación multimedia preparada por el docente.
+Video explicativo.
+12 26/09/2025 2 Áreas de aplicación de sistemas expertos, ejemplo practico Virtual Sincrónico
+Contenidos Objetivos de la unidad/módulo
+Principales áreas de aplicación de los sistemas expertos (industria, medicina, construcción,
+mantenimiento, diagnóstico, planificación).
+Revisión breve de los componentes clave del sistema experto (base de conocimientos, base de hechos,
+motor de inferencia).
+Desarrollo de un ejemplo práctico
+Al finalizar la clase, los alumnos serán capaces de:
+Identificar las principales áreas de aplicación de los sistemas expertos.
+Reconocer los componentes clave de un sistema experto y su relación en el
+proceso de inferencia.
+Aplicar los conceptos aprendidos desarrollando un ejemplo práctico sencillo
+con 4–5 reglas definidas por ellos.
+Analizar el flujo de información desde la base de conocimientos hasta la
+obtención de conclusiones.
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+Exposición teórica guiada: Breve explicación de las áreas de aplicación y repaso de los componentes del
+sistema experto.
+Desarrollo de ejemplo práctico guiado : Se propone un ejemplo sencillo, y los alumnos crean 4–5 reglas
+Google colab.
+Presentación multimedia preparada por el docente.
+Página 9 | 18
+en Google Colab siguiendo la guía del docente.
+Reflexión y discusión: Cada grupo explica brevemente su ejemplo y cómo la base de conocimientos y el
+motor de inferencia generaron las conclusiones
+13 2/10/2025 2 Revisión TP 1 – Sistemas Expertos Presencial
+Contenidos Objetivos de la unidad/módulo
+Puesta en común del trabajo entregado de cada grupo.
+Conclusiones de los problemas a solucionar en cada caso.
+Al finalizar la clase, los alumnos serán capaces de:
+ Que los alumnos puedan poner en práctica los conceptos teorizados sobre
+sistemas expertos para ver su funcionamiento.
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+Presentación de algunos trabajos
+Discusión general
+Dudas
+Material de apoyo con criterios de evaluación y guía para sistemas expertos para orientar
+la discusión.
+UNIDAD 3: Redes Neuronales
+Objetivo de la unidad: Comprender los fundamentos del aprendizaje profundo y las redes neuronales, conocer sus principales tipos y
+arquitecturas, identificar los elementos y funciones de cada componente, y reconocer cómo se aplican diferentes modelos para resolver distintos
+tipos de problemas.
+14 03/10/2025 3
+¿Qué es el aprendizaje profundo? - Tipos de aprendizaje: supervisado, no supervisado,
+por refuerzo
+Virtual Sincrónico
+Contenidos Objetivos de la unidad/módulo
+Definición y concepto de aprendizaje profundo (Deep Learning).
+Comparación con otros modelos de IA.
+Introducción a los tipos de aprendizaje: supervisado, no supervisado y por refuerzo.
+Ejemplos básicos y aplicación en cada tipo.
+Al finalizar la clase, los alumnos serán capaces de:
+Explicar qué es el aprendizaje profundo y su relevancia en el contexto de la IA.
+Diferenciar los distintos tipos de aprendizaje: supervisado, no supervisado y por
+refuerzo.
+Relacionar cada tipo de aprendizaje con ejemplos prácticos y aplicaciones
+reales.
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+Página 10 | 18
+Exposición teórica guiada: Presentación de los conceptos clave del aprendizaje profundo y tipos de
+aprendizaje. Comparación con otros modelos de IA
+Ejemplo práctico: Breve demostración en Google Colab de un ejemplo sencillo de aprendizaje
+supervisado y no supervisado
+Google Colab con ejemplos prácticos.
+Videos cortos para reforzar conceptos.
+Presentación multimedia preparada por el docente.
+15 09/10/2025 3 Redes CNN y RNN (LSTM) Virtual Sincrónico
+Contenidos Objetivos de la unidad/módulo
+Concepto y funcionamiento básico de una CNN (Convolucional Neural Network).
+Aplicaciones típicas: visión por computadora, imágenes
+Conexiones locales: cómo funciona la convolución y el pooling
+Concepto y funcionamiento básico de una RNN
+Problemas con las RNN tradicionales (desvanecimiento/explosión de gradiente)
+LSTM (long short-term memory
+Como LSTM soluciona los problemas de las RNN clásicas
+Aplicaciones típicas (secuencias, texto, series temporales)
+Al finalizar la clase, los alumnos serán capaces de:
+Explicar el funcionamiento básico de una CNN y su aplicación en datos con
+estructura espacial como imágenes.
+Comprender el concepto de RNN y los problemas que presentan las RNN
+tradicionales.
+Describir cómo las LSTM solucionan los problemas de las RNN clásicas y
+manejan dependencias a largo plazo.
+Diferenciar entre conexiones locales (CNN) y conexiones recurrentes (RNN) en
+redes neuronales.
+Identificar aplicaciones prácticas de CNN y RNN/LSTM en distintos tipos de
+datos.
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+Exposición teórica guiada: Explicación de CNN, RNN y LSTM con apoyo visual y diagramas. Comparación
+de conexiones locales vs. Recurrentes.
+Ejemplo práctico guiado: Demostración en Google Colab de una CNN aplicada a imágenes y de una
+RNN/LSTM aplicada a series temporales.
+Reflexión y preguntas: Discusión sobre casos prácticos y posibles aplicaciones de CNN y RNN/LSTM en
+la industria o investigación, participación individual
+Google Colab con ejemplos prácticos.
+Presentación multimedia preparada por el docente.
+Video corto explicativo sobre CNN y LSTM.
+Página 11 | 18
+16 10/10/2025 3 Redes Generativas (GANs), Autoencoders, Redes Siamese, Redes Residuales (ResNet) Virtual Sincrónico
+Contenidos Objetivos de la unidad/módulo
+Introducción a redes generativas
+Que son las GANs
+Arquitectura básica: generador y discriminador.
+Autoencoders :Concepto de codificador y decodificador
+Aplicaciones.
+Redes siamese: Arquitectura, función y aplicaciones
+Redes residuales (RESNET) : Problemas de degradación en redes profundas
+Concepto de “skip connections” o conexiones residuales.
+Impacto del entrenamiento y y rendimiento de redes profundas.
+Al finalizar la clase, los alumnos serán capaces de:
+Explicar el funcionamiento y propósito de GANs, Autoencoders, Redes Siamese
+y ResNet.
+Identificar aplicaciones prácticas y ventajas de cada tipo de red.
+Analizar los desafíos que estas arquitecturas buscan resolver en el
+entrenamiento y uso de redes neuronales profundas.
+Familiarizarse con los conceptos clave para poder entender e implementar
+trabajos que utilicen estas redes.
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+Exposición teórica guiada: Explicación de cada arquitectura con apoyo visual y comparaciones.
+Ejemplo práctico guiado: Demostración en Google Colab de un ejemplo sencillo de GAN o Autoencoder.
+Participación Individual, los alumnos siguen el ejemplo en su entorno; el docente atiende dudas en
+tiempo real.
+Google Colab con ejemplos prácticos.
+Video corto explicativo sobre las arquitecturas.
+Presentación multimedia preparada por el docente.
+17 16/10/2025 3 Arquitectura básica de una red neuronal: capas de entrada, ocultas y salida Virtual Sincrónico
+Contenidos Objetivos de la unidad/módulo
+Introducción a la estructura general de una red neuronal artificial.
+Descripción de las capas: de entrada, de salida y oculta.
+Funciones de activación más comunes: RELU, sigmoid, tanch.
+Breve explicación del proceso de propagación hacia adelante.
+Ejemplo visual de una red neuronal.
+Espacio para reflexión final y preguntas: Discusión breve sobre cómo las capas y funciones de activación
+afectan el comportamiento de la red.
+Al finalizar la clase, los alumnos serán capaces de:
+Comprender la estructura fundamental de una red neuronal y la función de cada tipo de
+capa.
+Identificar como se procesa la información dentro de la red desde la entrada hasta la
+salida.
+Entender la importancia de las funciones de activación para la capacidad de modelado no
+lineal.
+Familiarizarse con los conceptos básicos que sustentan el aprendizaje en redes
+neuronales.
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+Página 12 | 18
+Ejemplo práctico guiado: Visualización y ejecución de un ejemplo sencillo de propagación hacia
+adelante en Google Colab.
+Participación Individual, los alumnos siguen el ejemplo en su entorno; el docente atiende dudas en
+tiempo real.
+Google Colab con ejemplo práctico de propagación hacia adelante.
+Video corto explicativo sobre arquitectura de redes neuronales.
+Presentación multimedia preparada por el docente.
+18 17/10/2025 3 Revisión TP2 – Redes Neuronales Virtual Sincrónico
+Contenidos Objetivos de la unidad/módulo
+Presentación de Trabajos prácticos de los alumnos
+Puesta en común
+Repaso de buenas prácticas en diseño, evaluación y documentación de proyectos de IA.
+Fomentar el intercambio de ideas
+Identificar y discutir errores comunes y dificultades en el desarrollo del modelo.
+Promover el aprendizaje colaborativo
+Mejorar la capacidad crítica y analítica
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+Presentación de los estudiantes
+Feedback grupal y debate
+Identificación de las prácticas y aprendizajes
+Recomendaciones
+Trabajos prácticos creados por los grupos
+UNIDAD 4: Automatizaciones
+Objetivo de la unidad: Comprender los fundamentos de la resolución de problemas con inteligencia artificial y el papel de los agentes inteligentes
+en la automatización, conocer sus tipos, estructuras y aplicaciones, analizar cómo se integran en distintos procesos productivos y de asistencia, y
+reflexionar sobre los criterios de selección, las oportunidades y los desafíos éticos que plantean estas tecnologías.
+19 23/10/2025 3 Agentes inteligentes: definición, tipos, estructura y arquitectura Virtual Sincrónico
+Contenidos Objetivos de la unidad/módulo
+Definición de agente inteligente en IA
+Tipos de agentes (reactivos, deliberativos, Híbridos, basados en aprendizaje).
+Componentes básicos de un agente.
+Arquitectura general de un agente.
+Relación entre percepción, razonamiento y acción en agentes.
+Ejemplos prácticos de agentes en la vida real y en sistemas IA
+Al finalizar la clase, los alumnos serán capaces de:
+Comprender que es un agente inteligente y su rol en la IA
+Identificar los distintos tipos de agentes y sus características.
+Analizar la arquitectura y componentes que forman un agente inteligente.
+Relacionar la percepción, razonamiento y acción dentro del funcionamiento de un
+agente.
+Reconocer aplicaciones prácticas de agentes inteligentes
+Página 13 | 18
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+Exposición teórica guiada: Explicación de definición, tipos, componentes y arquitectura de agentes
+inteligentes.
+Ejemplo práctico guiado: Visualización y análisis de un ejemplo simple de agente inteligente en Google
+Colab.
+Reflexión y preguntas: Discusión sobre aplicaciones reales de agentes inteligentes y su impacto en
+distintos sectores, participación individual respuestas por chat o micrófono; el docente registra
+participación activa.
+Google Colab con ejemplo práctico de agente inteligente.
+Video corto explicativo sobre tipos y arquitectura de agentes.
+Presentación multimedia preparada por el docente.
+20 24/10/2025 4
+Automatizaciones inteligentes: tareas con IA y Criterios para elegir una
+automatización parte1
+Virtual Sincrónico
+Contenidos Objetivos de la unidad/módulo
+Introducción a la automatización inteligente y su relevancia
+Fundamentos de la resolución de problemas con IA
+Beneficios y limitaciones de la automatización inteligente.
+Evaluación del tipo de tarea para automatizar
+Introducción a criterios para elegir el tipo adecuado de automatización.
+Diferencia entre chatbot, asistentes virtuales y agentes autónomos.
+Agentes inteligentes como base de la automatización
+Al finalizar la clase el alumno podrá:
+Conocer el concepto y alcance de automatización inteligente con IA .
+Identificar qué tipo de tareas pueden beneficiarse de la automatización.
+Analizar los beneficios y riesgos asociados a la automatización.
+Comprender los criterios básicos para evaluar y elegir una automatización adecuada.
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+Exposición teórica guiada: explicación del concepto de automatización inteligente, beneficios,
+limitaciones y criterios básicos para elegir una automatización.
+Análisis de casos prácticos: presentación de 2–3 casos breves de automatización en distintas industrias
+(uno vinculado a construcción), con preguntas de reflexión al grupo. Los alumnos responden en chat o
+micrófono; el docente registra quiénes participan.
+Presentación multimedia preparada por el docente.
+Casos de estudio breves o artículos sobre automatización en industrias.
+Video corto introductorio sobre automatización inteligente.
+21 30/10/2025 4
+Automatizaciones inteligentes: tareas con IA y Criterios para elegir una
+automatización parte 2
+Presencial
+Contenidos Objetivos de la unidad/módulo
+Breve repaso de la clase anterior
+Evaluación de tareas: ¿qué actividades conviene automatizar y cuáles no?
+Ideas para llevar a la práctica en casos reales.
+Introducción a los agentes inteligentes como base de automatización: definición, arquitectura básica y
+Al finalizar la clase, los alumnos serán capaces de:
+Recordar los conceptos centrales de la clase anterior sobre automatización
+Página 14 | 18
+ejemplos.
+Diferencias entre chatbots, asistentes virtuales y agentes autónomos.
+Aplicaciones potenciales en la construcción y en otros sectores.
+inteligente.
+Analizar qué tareas son convenientes para automatizar y cuáles no.
+Comprender qué son los chatbots, asistentes y agentes autónomos, y reconocer
+su estructura básica.
+Identificar áreas de aplicación de estas tecnologías dentro y fuera del ámbito de
+la construcción.
+Explicar los conceptos básicos de entrada, procesamiento y respuesta en
+chatbots.
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+Exposición teórica guiada :explicación sobre evaluación de tareas a automatizar y la introducción de
+agentes inteligentes, con ejemplos ilustrativos.
+Presentación multimedia preparada por el docente.
+Video corto
+Lineamientos del Trabajo Práctico Final.
+Presentación multimedia preparada por el docente.
+Video corto introductorio sobre agentes inteligentes y chatbots.
+22 31/10/2025 4 De la teoría a la práctica Virtual Sincrónico
+Contenidos Objetivos de la unidad/módulo
+Breve repaso de la automatización inteligente y sus aplicaciones.
+Concepto básico de chatbot: definición y usos más comunes.
+Diferencia entre chatbot, asistente virtual y agente autónomo.
+Estructura básica de un chatbot: entrada → procesamiento → respuesta.
+Demostración guiada: creación y ejecución de un chatbot simple con herramienta accesibles
+Ideas y ejemplos de aplicación de chatbots en distintos ámbitos.
+Al finalizar la clase, los alumnos serán capaces de:
+Comprender qué es un chatbot y cuál es su rol en la automatización inteligente.
+Identificar los componentes básicos de un chatbot y cómo se relacionan entre
+sí.
+Construir y ejecutar un chatbot simple con guía del docente.
+Reconocer posibles aplicaciones reales de chatbots en diferentes áreas
+laborales y productivas.
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+Página 15 | 18
+Exposición practica guiada: el docente muestra en vivo cómo construir un chatbot simple en N8N u otra
+herramienta accesible como Dialogflow o ChatterBot. Los alumnos observan la demostración y pueden
+hacer preguntas durante el proceso.
+Puesta en común: discusión final sobre las diferencias entre chatbot, asistente virtual y agente
+autónomo, conectando con lo visto en clases anteriores.
+Herramienta de demostración (N8N, Dialogflow o ChatterBot).
+Presentación multimedia con esquema de estructura de chatbot.
+23 06/11/2025 Ética en IA y Sesgos Algorítmico Virtual asincrónico
+Contenidos Objetivos de la unidad/módulo
+introducción a la ética en IA .
+¿Qué es el sesgo algorítmico?
+Orígenes y tipos de sesgos en datos y modelos.
+Impacto del sesgo.
+Normativas y marcos legales emergentes sobre la IA
+ Comprender los principios éticos fundamentales aplicados en IA
+Reconocer que es el sesgo algorítmico, sus causas y consecuencias
+Analizar casos reales donde la ética y los sesgos impactaron en sistemas de IA
+Fomentar una reflexión crítica sobre el diseño y uso responsable de tecnologías
+basadas en IA.
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+Exposición de temas más importantes relacionados
+concientizar sobre el buen uso de la IA
+Presentación multimedia preparada por la docente.
+24 07/11/2025
+Repaso Virtual Sincrónico
+Contenidos Objetivos de la unidad/módulo
+Revisión general de los principales contenidos vistos
+Resolución de dudas
+Preguntas tipo examen
+Estrategias para abordar el examen
+.
+Consolidar los conocimientos adquiridos
+ Aclarar dudas sobre los temas más relevantes.
+ Preparar a los estudiantes para rendir el examen con confianza.
+Página 16 | 18
+.
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+• Exposición de los temas mas importantes vistos a lo largo del cuatrimestre
+• docente sistematiza las ideas principales.
+Presentación multimedia preparada por la docente.
+.
+25 13/11/2025
+Examen
+Presencial
+Contenidos Objetivos de la unidad/módulo
+Evaluar conocimientos adquiridos
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+26 14/11/2025 4
+Espacio para trabajar en Proyecto integrador
+Virtual asincrónico
+Contenidos Objetivos de la unidad/módulo
+Se deja este espacio para que los alumnos puedan terminar de Estructurar sus trabajos y consulta sus
+dudas a la docente
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+Página 17 | 18
+27 20/11/2025
+Exposición de trabajos finales Presencial
+Contenidos Objetivos de la unidad/módulo
+Apertura breve: introducción a la dinámica de la clase y recordatorio de criterios de
+presentación.
+Exposición de los alumnos (actividad individual o grupal): cada grupo/estudiante presenta su
+Trabajo Final Integrador (10–12 minutos). El docente modera y controla los tiempos.
+Ronda de preguntas y comentarios: luego de cada exposición, se abre un espacio de
+intercambio donde los compañeros pueden formular preguntas o aportar sugerencias; el
+docente registra participación.
+Retroalimentación del docente: devolución breve y focalizada después de cada presentación,
+destacando fortalezas y posibles mejoras.
+Cierre y reflexión colectiva: puesta en común de los principales aprendizajes del curso,
+reforzando la importancia de la IA en la automatización y en los distintos ámbitos vistos.
+Al finalizar la clase, los alumnos serán capaces de:
+Integrar y aplicar los contenidos aprendidos durante el curso en la resolución
+de un problema concreto.
+Comunicar y justificar su propuesta explicando la elección del problema, las
+técnicas de IA utilizadas y los resultados alcanzados.
+Participar en una discusión crítica y constructiva a partir de los trabajos de sus
+compañeros.
+Recibir y brindar retroalimentación que favorezca el aprendizaje individual y
+grupal.
+Reflexionar sobre el rol y la importancia de la IA en distintos contextos
+laborales y sociales.
+Actividades Materiales (lectura y elementos y recursos para desarrollar las actividades)
+Brindar a los estudiantes la oportunidad de recuperar contenidos no aprobados o no rendidos.
+Permitir la entrega y corrección de trabajos prácticos pendientes.
+Presentación multimedia
+Proyector
+Máquinas para profesor y alumnos
+Acceso a internet
+28 21/11/2025 4 Feriado Libre
+30 27/11/2025 Recuperatorios y entregas de TP pendientes Presencial
+31 28/11/2025 Cierre de notas Virtual Asincrónico
+Página 18 | 18
+Modalidad de Evaluación:
+1. Cantidad de Parciales y modalidad: un parcial teórico, modalidad presencial
+Consignas: El examen evaluará los contenidos teóricos y conceptuales desarrollados en clase Múltiple choise.
+Duración aproximada: 60 minutos.
+No se permite el uso de dispositivos electrónicos.
+2. Cantidad de TP grupales:3
+Consignas: Los trabajos deberán realizarse en grupos de 3 a 5 integrantes.
+Entrega en formato digital (PDF o notebook según corresponda).
+Cada trabajo práctico tendrá consignas específicas, relacionadas con las unidades temáticas vistas hasta el momento.
+Se evaluará: cumplimiento de la consigna, correcta aplicación de conceptos, claridad en la presentación y participación equitativa del grupo
+3. TP integrador: 1
+Consignas: Proyecto final que integre los contenidos teóricos y prácticos desarrollados durante el cuatrimestre.
+El equipo deberá justificar las decisiones tomadas, detallar las metodologías utilizadas y analizar resultados.
+4. Por favor describir brevemente el proceso de evaluación

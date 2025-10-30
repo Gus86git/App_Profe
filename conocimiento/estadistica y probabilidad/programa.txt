@@ -1,0 +1,176 @@
+Materia: Estadística y Probabilidades para Gestión de Datos
+
+Horarios: Miércoles 8 a 12hs
+Docente: Ferrare Rodrigo
+Régimen:
+Carga horaria: 6 horas semanales
+2
+Fundamentación
+La asignatura de "Estadística y Probabilidades para Gestión de Datos" es muy
+importarte en el plan de estudios de la carrera de Ciencia de Datos, ya que
+proporciona a los estudiantes las habilidades y conocimientos necesarios para
+analizar y gestionar grandes volúmenes de datos mediante herramientas estadísticas
+y modelos probabilísticos. Esta materia está diseñada para brindar una comprensión
+profunda tanto de la estadística descriptiva como de la teoría de probabilidades,
+permitiendo a los estudiantes interpretar valores obtenidos y desarrollar modelos para
+la toma de decisiones basada en datos.
+La estructura de la enseñanza se divide en dos bloques: "Estadística" y
+"Probabilidades", cada uno de los cuales aborda diferentes aspectos cruciales para
+la gestión de datos.
+El bloque de Estadística se enfoca en los conocimientos de estadística descriptiva,
+enseñando a los estudiantes a obtener y analizar datos reales sistematizados. Los
+estudiantes aprenderán a describir conjuntos de datos, interpretar resultados y tomar
+decisiones informadas. Los temas incluyen definiciones fundamentales, análisis
+descriptivo de datos, medidas de posición, histogramas, distribuciones, correlación,
+regresión y análisis de varianza. Estos contenidos son esenciales para comprender
+cómo se estructuran y analizan los datos en diversas situaciones problemáticas.
+El bloque de Probabilidades se centra en la creación y análisis de modelos
+probabilísticos. Los estudiantes explorarán la teoría de la probabilidad, cálculo de
+probabilidades, probabilidad condicional, combinatoria y sucesos aleatorios. Este
+bloque permitirá a los estudiantes desarrollar modelos para experimentos aleatorios
+y calcular probabilidades, habilidades cruciales para modelizar y predecir
+comportamientos en contextos de datos masivos.
+La enseñanza de estos bloques no sigue un orden rígido, sino que se aborda de
+manera modular, permitiendo una integración coherente de los contenidos según las
+capacidades que se desean desarrollar y los problemas propios del ámbito profesional
+de la ciencia de datos.
+Objetivos
+Objetivos Generales:
+• Desarrollar habilidades analíticas y críticas en los estudiantes para abordar
+problemas complejos relacionados con el análisis de datos y la modelización
+probabilística en el contexto de la ciencia de datos.
+• Fomentar el trabajo colaborativo y el aprendizaje en equipo como parte integral
+del proceso de resolución de problemas estadísticos y probabilísticos,
+3
+promoviendo una actitud proactiva hacia la colaboración y el intercambio de
+ideas.
+• Capacitar a los estudiantes en el uso eficaz de herramientas y técnicas
+estadísticas y probabilísticas, con el fin de administrar y analizar datos de
+manera eficiente y precisa en entornos de análisis de datos.
+Objetivos Específicos:
+• Comprender y aplicar conceptos fundamentales de estadística descriptiva,
+incluyendo la interpretación y manipulación de datos individuales y agrupados,
+así como la utilización de medidas de posición y dispersión.
+• Analizar y describir colecciones de datos mediante técnicas estadísticas,
+utilizando gráficos y estadísticos descriptivos para interpretar resultados y
+tomar decisiones informadas.
+• Dominar el concepto de variables aleatorias discretas y continuas, así como
+las principales distribuciones de probabilidad, como la binomial y la normal,
+para modelar fenómenos aleatorios.
+• Aplicar técnicas de cálculo de probabilidades, incluyendo la probabilidad
+condicional, combinatoria y el uso de modelos probabilísticos para resolver
+problemas prácticos en el contexto de la ciencia de datos.
+• Utilizar métodos de inferencia estadística para realizar estimaciones y pruebas
+de hipótesis, interpretando resultados en contextos reales y relevantes para la
+ciencia de datos.
+• Desarrollar habilidades para comunicar de manera efectiva los resultados
+obtenidos a partir del análisis estadístico y probabilístico de datos, utilizando
+herramientas visuales y técnicas de presentación de informes.
+• Integrar conocimientos y habilidades adquiridos en la materia para abordar
+proyectos y desafíos específicos en el campo de la ciencia de datos,
+demostrando un enfoque sistemático y riguroso en la resolución de problemas
+mediante el uso de modelos estadísticos y probabilísticos.
+Contenidos
+Los contenidos a desarrollar en este módulo se organizan en dos bloques
+1) Bloque Estadística
+• Estadística: Definiciones y conceptos fundamentales.
+• Estadística descriptiva. Análisis descriptivo de datos individuales y agrupados:
+variables discretas y continuas, medidas de posición, histogramas.
+Estadísticos descriptivos.
+• Variables aleatorias discretas y continuas.
+• Distribución binomial y de Poisson. Modelos relacionados con fenómenos de
+vida. Fiabilidad. Modelos econométricos.
+4
+• Distribuciones: La distribución normal. Sumas de variables aleatorias. Teorema
+central del límite. Aproximaciones. Modelización. Análisis no paramétricos.
+• Principios de inferencia estadística.
+• Correlación y regresión lineal de dos variables. Conceptos básicos de
+regresión múltiple. Análisis de varianza.
+2) Bloque Probabilidades
+• Teoría de la probabilidad. Cálculo de probabilidades.
+• Probabilidad condicional.
+• Teoría del control estadístico.
+• Combinatoria. Permutaciones. Variaciones y combinaciones.
+• Suceso aleatorio. Sucesos simples y compuestos. Espacio muestral y espacio
+de sucesos.
+• Propiedades de la probabilidad. Probabilidad total. Probabilidad compuesta.
+Probabilidad condicionada.
+• Sucesos independientes. Sucesos dependientes. Modelos Probabilísticos.
+Cronograma
+13-8 Estadística definición y concepto, Estadística descriptiva
+20-8 Estadística descriptiva
+27-8 Medidas de tendencia central
+3-9 Medidas de dispersión
+10-9 Correlación y regresión lineal.
+17-9 Correlación y regresión lineal.
+24-9 Modelo de primer parcial. Repaso.
+1-10 PRIMER EXAMEN PARCIAL
+8-10 Teoría de la probabilidad. Probabilidad condicional.
+15-10 Teoría de conteo. Sucesos y espacio muestral
+22-10 Distribución binomial y Poisson
+29-10 Distribución normal e intervalos de confianza
+5
+5-11 Modelo de segundo parcial. Repaso.
+12-11 SEGUNDO EXAMEN PARCIAL
+19-11 RECUPERATORIOS
+26-11 RECUPERATORIOS
+6
+Bibliografía:
+Bibliografía Obligatoria:
+• "Estadística para Administradores" de David M. Levine, Mark L. Berenson y
+Timothy C. Krehbiel.
+• "Probabilidad y Estadística para Ingenieros" de Richard A. Johnson.
+Bibliografía Opcional:
+• "Estadística Descriptiva" de Mario Triola.
+• "Introducción a la Probabilidad y Estadística" de Mendenhall, Beaver y Beaver.
+• "Fundamentos de Estadística" de Sheldon Ross.
+• "Estadística Aplicada a la Administración y a la Economía" de Humberto
+Guzmán y Allan G. Bluman.
+Modalidad de cursada:
+Esta asignatura adopta la modalidad presencial y virtual, con desarrollo de contenidos
+teórico-prácticos especialmente preparados para cada unidad.
+A los efectos de lograr los objetivos mencionados, la metodología de enseñanza
+aprendizaje a emplear en el desarrollo del curso estará estructurada en base a
+trabajos individuales del estudiante y a formar equipos de trabajo durante el
+cuatrimestre.
+La metodología será integral y continua, se implementará un enfoque participativo y
+vivencial, trabajando sobre problemas reales. Las clases serán teóricas y prácticas, y
+esencialmente participativas. El principio rector del mismo será aprender “haciendo”.
+7
+Actividades a cargo del estudiante:
+• Resolución de casos individuales y en equipos. Puesta en común del análisis
+realizado con la guía del docente.
+• Ejercicios de aplicación de conceptos en forma individual y grupal.
+• Los alumnos prepararán exposiciones breves sobre temas seleccionados.
+Evaluación y Condiciones de promoción
+Para aprobar la asignatura, cada alumno deberá cumplir con los siguientes requisitos:
+1. Asistencia:
+o Asistir al 75% de las clases, tanto en modalidad virtual como presencial.
+2. Evaluaciones Parciales:
+o Aprobar dos evaluaciones parciales con una nota mínima de 4 puntos
+(equivalente a resolver correctamente el 60% del examen), siendo la
+máxima calificación de 10 puntos.
+o En caso de no aprobar uno o ambos parciales, el alumno podrá rendir
+un examen recuperatorio por cada parcial no aprobado, debiendo
+obtener una nota mínima de 4 puntos (equivalente a resolver
+correctamente el 60% del examen).
+3. Trabajos Prácticos:
+o Entregar los trabajos prácticos solicitados en tiempo y forma, ya sean
+individuales o grupales.
+4. Participación:
+o Participar activamente en las clases, demostrando haber leído la
+bibliografía asignada.
+5. Examen Final:
+o Aprobar un examen final, ya sea escrito u oral. La nota final del curso se
+compondrá de la participación del alumno en las clases, los trabajos
+individuales y en equipo realizados, las notas de los parciales y la
+evaluación de los trabajos prácticos.
+Promoción de la cursada:
+• Accederán a este régimen de aprobación aquellos alumnos cuyos exámenes
+parciales (ambos) tengan una nota comprendida entre 7 y 10 puntos y que
+hayan asistido al menos al 75% de las clases (virtuales y presenciales).
+Examen final:
+8
+• Deberán rendir el examen final aquellos alumnos que hayan aprobado ambos
+parciales, o sus respectivos recuperatorio, y que hayan asistido al menos al
+75% de las clases (virtuales y presenciales)

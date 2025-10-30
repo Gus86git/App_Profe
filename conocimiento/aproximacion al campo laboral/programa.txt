@@ -1,0 +1,150 @@
+Materia: Aproximación al Campo Laboral
+Curso: Práctica Profesionalizante Horarios: Martes
+8:00 a 10:00
+Docente: Acri, María del Carmen
+Régimen: Cuatrimestral Carga horaria: 3
+Hs. (Semanales)
+Fundamentación
+El objetivo de esta materia es iniciar a los estudiantes en el trayecto de las prácticas
+Profesionalizante para lograr articular y consolidar los saberes adquiridos en los espacios
+curriculares ya recorridos.
+El propósito es que los estudiantes consoliden e integren las capacidades o saberes del perfil
+profesional, y se inicien en la construcción de su rol profesional del Técnico Superior en
+Ciencia de Datos e Inteligencia Artificial. Se busca una visión completa e integral del campo
+profesional, incluyendo contextos, procesos, actores, relaciones, tensiones y conflictos.
+Apunta, asimismo, a que los estudiantes logren desarrollar aquellas capacidades sociales y
+laborales para convertirse en profesionales competentes en el ámbito del desarrollo de
+software en ambientes Cloud
+Se propone el Taller de Práctica como una aproximación al mundo laboral de las Práctica
+Profesionales que podrán realizar los estudiantes en el plano empresarial, el análisis y diseño
+de sistemas informáticos determina las características del sistema de software desarrollado,
+y en este sentido, se facilitará al futuro Técnico en los siguientes conceptos:
+• El Ciclo de vida de un sistema, dará la naturaleza del software.
+• Conocimiento de Metodologías y Métricas para desarrollo de Sistemas.
+• La elección del modelo de Software Libre.
+• El desarrollo de una propuesta comercial aportará al futuro Técnico, los conocimientos
+necesarios para atacar el problema del crecimiento acelerado de las aplicaciones para las
+redes de comunicación y la correspondiente globalización de la información con proveedores
+Cloud.
+Objetivos
+Que las y los estudiantes sean capaces de:
+● Identificar las características y las etapas del proceso de creación del Software y
+reconocer las funciones de los distintos actores intervinientes.
+● Reconocer las funciones de los distintos actores intervinientes en el proceso.
+● Aplicar técnicas de observación y entrevistas para definir los requerimientos de un
+proyecto de desarrollo de software.
+● Analizar el contexto empresarial, para ofrecer productos innovadores.
+● Identificar diferentes procesos de trabajo, sus características variables puestas en
+juego, en ambientes reales de trabajo y/o simulados.
+● Reconocer los diferentes actores que conforman el campo profesional.
+● Realizar observaciones y entrevistas que le permitan conocer las características de
+los contextos laborales, las vinculaciones con otros actores del Sector y/o equipos de
+trabajo.
+● Adquirir una visión amplia del trabajo colaborativo dentro de un proyecto. Teniendo en
+cuenta la documentación que resuelve y guía la problemática a resolver.
+Contenidos
+EL REGISTRO DE LA OBSERVACIÓN
+Actores en el sistema informático. Construcción de consultora informática simulada: su
+función, los roles. Misión y Visión. Rol profesional. Perfil. Participantes y actores en desarrollo
+de software. Consultoras informáticas. Empresas IT. Técnicas de observación y entrevistas.
+Cuestionarios, preguntas abiertas y cerradas. Listas de chequeo. Recopilación de
+información. Entrevistas, encuesta, observación, diagrama de flujo. Composición de la
+información: organigrama. Documentación: Entrevistas, encuesta, cuestionario, observación,
+adjuntos, diagrama de flujo. Edición colaborativa. Reportes. Transformación de la
+información. Tecnología adaptativa. Documentación. Análisis de Matriz FODA. Matriz BCG -
+Reportes. Relevamiento. Cinco fuerzas de Porter. Herramientas Cloud. Metodologías.
+Participantes.
+REQUERIMIENTOS DE UN PROYECTO DE SOFTWARE
+Gestión, clasificación de requerimientos, funcionales y no funcionales, obligatorio, opcional,
+responsabilidad de los usuarios. Recopilación de información. Entrevistas, encuesta,
+observación, diagrama de flujo. Composición de la información: organigrama. Obsolescencia
+programada. Tecnología Disruptiva. Recopilación de información. Documentación.
+Transformación de la información. Tecnología adaptativa. Tecnologías disruptivas.
+Introducción y conceptos sobre: Fases: Planificación, Diseño, Codificación, Revisión,
+Compilación, Pruebas. Der, Diccionario de datos.
+MARCOS METODOLÓGICOS
+Los procesos de Desarrollo de Software, naturaleza, elementos, objetivos y escalabilidad de
+un proceso. Modelos de procesos: cascada, espiral, iterativo e incremental. Metodologías
+Ágiles. Flujos de trabajo, fases, enfoques, nomenclaturas. Modelos de procesos: Ciclo de vida
+tradicional en cascada, espiral, iterativo e incremental. Flujos de trabajo, fases, enfoques.
+Metodologías tradicionales. Kanban. Manifiesto Ágil. XP y Scrum. Design Thinking. Métricas.
+MARCO LEGAL Y ASOCIACIONES PROFESIONALES
+Diagrama de Gantt. Edición colaborativa, Hoja de ruta (roadmap). Posicionamiento del
+producto. Darle un valor monetario al proceso. Cámaras empresarias: servicios y actividades,
+CADESI (Cámara Argentina de Desarrollo de Software independiente), CESSI (Cámara de la
+industria Argentina del Software), CIECCA (Cámara industria informática), CICOMRA
+(Cámara de informática y comunicaciones de la República Argentina).
+Cronograma
+Clase 1 Presentar el programa y sus propósitos - Introducción a la importancia de la
+definición del problema y los objetivos del sistema como base de cualquier proyecto.
+Reconocimiento de los síntomas y problemas que pueden surgir en una organización –
+Introducción sobre los conceptos de la nube AWS
+Clase 2 Conociendo los Contextos de Trabajo y el Análisis del Entorno. Contexto
+interno: Identificación de procesos y recursos internos. Análisis FODA. Organigrama
+empresarial. Organigrama IT - Roles - Responsabilidades - Compensaciones - Contexto
+empresarial – Diagrama de Contexto. Facturación y economía de la nube AWS.
+Infraestructura general de AWS.
+Clase 3 Aproximación Directa a Experiencias y Recolección de Datos. Entrevistas y
+Observación. Métodos de recopilación de datos - entrevista - cuestionario - entrevistas -
+reuniones JAD – Casos de Uso – Seguridad en la nube de AWS. Cómputo en AWS
+Clase 4 Identificación y Modelado Básico de Procesos de Trabajo. Roles y
+Responsabilidades en el Ecosistema Profesional. Equipos de trabajo. Metodologías.
+Clase 5 Metodologías
+Clase 6 1° Parcial
+Clase 7 1° Recuperatorio - Ciclo de Vida del Producto y Matriz BCG. CAPEX – OPEX
+– Almacenamiento en AWS - Bases de Datos disponibles en AWS
+Clase 8 Análisis del macroentorno (Entorno General). Análisis del microentorno y las
+Cinco Fuerzas de Porter (Entorno Específico). Arquitectura en la nube AWS
+Clase 9 Organización de los requerimientos funcionales y no funcionales.
+Clase 10 Viabilidad del proyecto. Monitoreo y escalado automático en AWS
+Clase 11 Planificación y control de actividades. Diagramas de Gantt
+Clase 12 Responsabilidad Legal y Social del TS y Ética en la IA. Misión - Visión
+Clase 13 Elaboración y Presentación de la Propuesta de Sistemas
+Clase 14 Propuesta valorativa
+Clase 15 2° Parcial
+Clase 16 2° Recuperatorio – Cierre de la materia. – Entrega de notas
+Bibliografía:
+Obligatoria
+Apuntes del docente, digitalizados.
+Apuntes de AWS, digitalizados.
+Bahit E.. Scrum & Extreme Programming. 2012. Buenos Aires
+Janhagen V..Design Thinking, Larga vida al desing thinking. 2019. 1era.Idean Publishing
+Kendal & Kendal. 2011. Análisis y diseño de sistemas, 8va Edición. Pearson
+Manifiesto por el Desarrollo Ágil de Software. Disponible en
+http://agilemanifesto.org/iso/es/manifesto.html
+Pressman, Roger. 2010. Ingeniería de software. Un enfoque práctico. 7ma Edición.
+http://artemisa.unicauca.edu.co/~cardila/Libro_Pressman_7.pdf (digitalizado)
+Sommerville Ian. Ingeniería De Software. 9na Edición. Pearson
+Yourdon, Edward. 1993. Análisis Estructurado Moderno. ED. Prentice-Hall (Digitalizado).
+ISBN: 9789688803035
+Optativa
+Pachi Marino. La guía de la usina de ideas
+Modalidad de cursada:
+Exposición y explicación, a través de video conferencias. Interacción activa y proactiva de los
+alumnos, mediante el diálogo constructivo del conocimiento. Lectura y estrategias de la
+práctica profesional. Esquemas de pizarrón virtual, videos, tecnologías de proyección,
+trabajos prácticos grupales e individuales. Actividades prácticas obligatorias para las clases
+virtuales, introducidas por la plataforma Moodle
+Evaluación y Condiciones de promoción
+Asistencia 75% de los días a las clases completa presencial, y 75% de los días a las clases
+completa virtual. Participación en los foros y / o actividades de las clases virtuales.
+Trabajo en equipo. Resolución de problemas. Investigación de los temas propuestos.
+Entrega en tiempo y forma de las entregas parciales del TP. Un parcial. Exposición y entrega
+final del TP. Cumplir con la capacitación propuesta en Amazon Web Service, con un puntaje
+superior a 70%, y Una permanencia superior al 75%.
+Aprobación: Entrega de todos los TP. Entrega de las entregas parciales del TP en tiempo.
+Un parcial o recuperatorio con nota inferior a 7. Exposición y entrega final del TP o
+recuperatorio, con nota inferior a 7. Cumplir con la capacitación propuesta en Amazon Web
+Service, con un puntaje superior a 70%, y Una permanencia superior al 75%. Cumplir con el
+75% de asistencia en cada modalidad (virtual y presencial)
+Promoción: Entrega de todos los TP. Entrega de las entregas parciales del TP en tiempo.
+Un parcial con nota 7 o superior. Exposición y entrega final del TP, con nota 7 o superior.
+Cumplir con la capacitación propuesta en Amazon Web Service, con un puntaje superior a
+70%, y Una permanencia superior al 75%. Cumplir con el 75% de asistencia en cada
+modalidad (virtual y presencial)
+Libre: Esta materia no se puede rendir libre.
+Sitios de interés:
+https://cadesi.com.ar/
+https://cessi.org.ar/
+https://www.ciiecca.org.ar/institucional/quienes-somos/
+https://cicomra.org.ar/
