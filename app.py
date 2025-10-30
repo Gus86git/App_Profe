@@ -12,31 +12,35 @@ import numpy as np
 PROFESORES = {
     "estadistica": {
         "nombre_materia": "Estadística y Probabilidad",
-        "nombre_profesor": "Profesor Ferrarre", 
+        "nombre_profesor": "Profesor Ferrare", 
         "emoji": "📊",
-        "estilo": "Práctico y numérico",
-        "personalidad": "Eres práctico, directo y te enfocas en ejercicios numéricos. Usa ejemplos concretos de probabilidad y estadística."
+        "estilo": "Práctico y conciso",
+        "personalidad": "Eres práctico, directo y te enfocas en ejercicios numéricos. Usa ejemplos concretos de probabilidad y estadística.",
+        "carpeta": "estadistica y probabilidad"  # ← NUEVO: nombre exacto de la carpeta
     },
     "desarrollo_ia": {
         "nombre_materia": "Desarrollo de sistemas de IA",
         "nombre_profesor": "Profesora Pose",
         "emoji": "🤖", 
-        "estilo": "Técnico y práctico",
-        "personalidad": "Eres técnica pero accesible. Enfócate en fundamentos de IA y desarrollo de sistemas inteligentes."
+        "estilo": "Técnica y práctica",
+        "personalidad": "Eres técnica pero accesible. Enfócate en fundamentos de IA y desarrollo de sistemas inteligentes.",
+        "carpeta": "desarrollo de sistemas de ia"  # ← NUEVO: nombre exacto de la carpeta
     },
     "campo_laboral": {
         "nombre_materia": "Aproximación al campo laboral", 
         "nombre_profesor": "Profesora Acri",
         "emoji": "💼",
         "estilo": "Exigente y profesional",
-        "personalidad": "Eres exigente pero constructiva. Enfócate en profesionalismo y preparación para el mundo laboral."
+        "personalidad": "Eres exigente pero constructiva. Enfócate en profesionalismo y preparación para el mundo laboral.",
+        "carpeta": "aproximacion al campo laboral"  # ← NUEVO: nombre exacto de la carpeta
     },
     "comunicacion": {
         "nombre_materia": "Comunicación",
         "nombre_profesor": "Profesora Rodríguez", 
-        "emoji": "🎯",
-        "estilo": "Claro y estructurado",
-        "personalidad": "Eres clara y estructurada. Usa ejemplos y técnicas prácticas de comunicación efectiva."
+        "emoji": "💬",
+        "estilo": "Clara y comprensible",
+        "personalidad": "Eres clara y comprensiblea. Usa ejemplos y técnicas prácticas de comunicación efectiva.",
+        "carpeta": "comunicacion"  # ← NUEVO: nombre exacto de la carpeta
     }
 }
 
@@ -56,11 +60,11 @@ try:
     client = Groq(api_key=st.secrets["groq_api_key"])
 except Exception as e:
     st.error(f"❌ Error configurando Groq: {str(e)}")
-    st.info("🔑 Configura GROQ_API_KEY en los secrets de Streamlit Cloud")
+    st.info("🔑 Configura groq_api_key en los secrets de Streamlit Cloud")
     st.stop()
 
 # =========================================
-# SISTEMA DE CONOCIMIENTO HÍBRIDO
+# SISTEMA DE CONOCIMIENTO HÍBRIDO (ACTUALIZADO)
 # =========================================
 class SistemaConocimientoHibrido:
     def __init__(self):
@@ -71,7 +75,7 @@ class SistemaConocimientoHibrido:
         self.conocimiento_cargado = False
     
     def cargar_conocimiento_completo(self, base_path="conocimiento"):
-        """Cargar conocimiento con párrafos largos"""
+        """Cargar conocimiento - AHORA COMPATIBLE CON ESPACIOS EN NOMBRES"""
         try:
             if not os.path.exists(base_path):
                 return False
@@ -79,34 +83,40 @@ class SistemaConocimientoHibrido:
             self.documentos = []
             self.metadata = []
             
-            for materia in os.listdir(base_path):
-                materia_path = os.path.join(base_path, materia)
-                if os.path.isdir(materia_path):
+            # NUEVO: Usar el mapeo de PROFESORES para encontrar las carpetas
+            for clave, profesor_info in PROFESORES.items():
+                nombre_carpeta = profesor_info["carpeta"]
+                materia_path = os.path.join(base_path, nombre_carpeta)
+                
+                if os.path.exists(materia_path):
                     for archivo in os.listdir(materia_path):
                         if archivo.endswith('.txt'):
                             archivo_path = os.path.join(materia_path, archivo)
                             try:
                                 with open(archivo_path, 'r', encoding='utf-8') as f:
                                     contenido = f.read()
-                                    # PÁRRAFOS LARGOS (500-1000 palabras)
+                                    # PÁRRAFOS LARGOS
                                     parrafos = self._dividir_en_parrafos_largos(contenido)
                                     for i, parrafo in enumerate(parrafos):
-                                        if len(parrafo.strip()) > 100:  # Párrafos significativos
+                                        if len(parrafo.strip()) > 100:
                                             self.documentos.append(parrafo)
                                             self.metadata.append({
-                                                'materia': materia,
+                                                'materia': clave,  # Usamos la clave interna
                                                 'archivo': archivo,
                                                 'parrafo_num': i,
-                                                'fuente': f"{materia}/{archivo}",
+                                                'fuente': f"{nombre_carpeta}/{archivo}",  # Mostrar nombre real
                                                 'longitud': len(parrafo)
                                             })
                             except Exception as e:
+                                st.warning(f"⚠️ Error leyendo {archivo_path}: {str(e)}")
                                 continue
+                else:
+                    st.warning(f"📁 No se encuentra: {materia_path}")
             
             if not self.documentos:
                 return False
             
-            # Sistema de búsqueda optimizado para párrafos largos
+            # Sistema de búsqueda optimizado
             self.vectorizer = TfidfVectorizer(
                 max_features=2000,
                 stop_words=['el', 'la', 'los', 'las', 'de', 'en', 'y', 'que', 'se', 'un', 'una', 'es', 'son'],
@@ -121,18 +131,17 @@ class SistemaConocimientoHibrido:
             return True
             
         except Exception as e:
+            st.error(f"❌ Error cargando conocimiento: {str(e)}")
             return False
     
     def _dividir_en_parrafos_largos(self, texto):
         """Dividir en párrafos largos manteniendo contexto"""
-        # Dividir por saltos de línea dobles para párrafos largos
         parrafos = re.split(r'\n\s*\n', texto)
         parrafos_largos = []
         
         for parrafo in parrafos:
             parrafo = parrafo.strip()
             if len(parrafo) > 100:
-                # Si el párrafo es muy largo, dividirlo en chunks de ~500 palabras
                 palabras = parrafo.split()
                 for i in range(0, len(palabras), 500):
                     chunk = ' '.join(palabras[i:i+500])
@@ -156,7 +165,7 @@ class SistemaConocimientoHibrido:
             
             resultados = []
             for idx in indices_ordenados:
-                if similitudes[idx] > 0.15:  # Umbral más bajo para capturar más contenido
+                if similitudes[idx] > 0.15:
                     metadata = self.metadata[idx]
                     
                     if materia_filtro and metadata['materia'] != materia_filtro:
@@ -177,11 +186,11 @@ class SistemaConocimientoHibrido:
             return []
 
 # =========================================
-# INTERFAZ PRINCIPAL PERSONALIZADA IFTS33
+# INTERFAZ PRINCIPAL (IGUAL QUE ANTES)
 # =========================================
 def main():
     st.title("🎓 IA Assistant IFTS33")
-    st.markdown("### 🤖 Prioriza tu conocimiento + 🧠 IA como complemento (Segundo Cuatrimestre)")
+    st.markdown("### 🤖 Prioriza tu conocimiento + 🧠 IA como complemento")
     
     # Inicializar sistema
     if "sistema_hibrido" not in st.session_state:
@@ -311,7 +320,7 @@ def main():
                     st.session_state[chat_key].append({"role": "assistant", "content": error_msg})
 
 # =========================================
-# FUNCIONES DE GENERACIÓN DE RESPUESTAS
+# FUNCIONES DE GENERACIÓN DE RESPUESTAS (IGUALES)
 # =========================================
 def generar_respuesta_solo_local(prompt, materia, resultados, profesor):
     """Respuesta usando solo conocimiento local"""
@@ -342,7 +351,7 @@ def generar_respuesta_solo_ia(prompt, materia, profesor, modelo, temperatura):
         Responde la siguiente pregunta manteniendo tu estilo característico.
         Sé práctico y útil para el estudiante.
         
-        PREGunta: {prompt}
+        PREGUNTA: {prompt}
         
         RESPUESTA:
         """
